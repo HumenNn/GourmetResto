@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Jeju Myeongjo', serif;
+}
+
+.container {
+    width: 1440px;
+    margin: 0 auto;
+}
+
+/* HEADER */
+
+.header {
+    height: 90px;
+    background-color: #F5F5F5;
+    display: flex;
+    align-items: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Inspiration', cursive;
+    font-size: 32px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 32px;
+    margin-left: 40px;
+}
+
+/* HERO */
+
+.hero {
+    padding: 80px 0;
+}
+
+.hero h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    width: 250px;
+    height: 50px;
+    background-color: #F5F5F5;
+    border: none;
+    border-radius: 8px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* DISH SECTION */
+
+.dish {
+    padding: 80px 0;
+}
+
+.dish-content {
+    display: flex;
+    gap: 40px;
+}
+
+.dish-image {
+    width: 600px;
+    height: 420px;
+    background-color: #00C8B3;
+}
+
+.dish-text h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.dish-text p {
+    font-size: 32px;
+}
+
+section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nav a.active {
+    color: #00C8B3;
+}

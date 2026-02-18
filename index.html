@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <title>GourmetResto</title>
     <link rel="stylesheet" href="style.css">
-
-    <!-- Подключение шрифтов -->
     <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Jeju+Myeongjo&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <!-- HEADER -->
     <header class="header">
         <div class="container header-content">
             <div class="logo">GourmetResto</div>
-
             <nav class="nav">
-                <a href="#">Main</a>
-                <a href="#">Menu</a>
-                <a href="#">About us</a>
-                <a href="#">Contacts</a>
+                <a href="index.html">Main</a>
+                <a href="menu.html">Menu</a>
+                <a href="about.html">About us</a>
+                <a href="contacts.html">Contacts</a>
             </nav>
         </div>
     </header>
@@ -29,21 +25,29 @@
         <div class="container">
             <h1>Вкус, который вдохновляет</h1>
             <p>Авторская кухня и атмосфера уюта в центре города</p>
-            <button class="btn">Смотреть меню</button>
         </div>
     </section>
 
-    <!-- DISH OF THE DAY -->
+    <!-- БЛЮДО ДНЯ -->
     <section class="dish">
-        <div class="container dish-content">
-            <div class="dish-image"></div>
-
-            <div class="dish-text">
-                <h2>Блюдо дня</h2>
-                <p>Текст про самое вкусное блюдо в мире</p>
+        <div class="container">
+            <h2>Блюдо дня</h2>
+            <div class="dish-content">
+                <div class="dish-image"></div>
+                <div class="dish-text">
+                    <p>Текст про самое вкусное блюдо в мире</p>
+                </div>
             </div>
         </div>
     </section>
-<script src="script.js"></script>
+
+    <!-- КНОПКА (теперь после серой секции, как в Фигме) -->
+    <div class="cta">
+        <div class="container">
+            <a href="menu.html" class="btn">Смотреть меню</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

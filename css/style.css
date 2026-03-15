@@ -1,10 +1,33 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-body { font-family: 'Jeju Myeongjo', serif; }
+body {
+    font-family: 'Jeju Myeongjo', serif;
+}
 
 .container {
-    width: 1440px;
+    max-width: 1440px;
     margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* SKIP LINK */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 100;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
 }
 
 /* HEADER */
@@ -14,29 +37,37 @@ body { font-family: 'Jeju Myeongjo', serif; }
     background-color: #F5F5F5;
 }
 
-.header-content {
+.header__content {
     display: flex;
     align-items: center;
     height: 100%;
-    padding: 0 20px;
 }
 
-.logo {
+.header__logo {
     font-family: 'Inspiration', cursive;
     font-size: 32px;
     color: black;
 }
 
-.nav {
+.header__nav {
     display: flex;
     gap: 50px;
-    margin-left: 200px; /* точно как в Фигме (nav начинается ~437px) */
+    margin-left: 200px;
 }
 
-.nav a {
+.nav__link {
     text-decoration: none;
     color: black;
     font-size: 32px;
+}
+
+.nav__link--active {
+    font-weight: bold;
+}
+
+/* MAIN */
+.main {
+    min-height: calc(100vh - 90px - 200px);
 }
 
 /* HERO */
@@ -44,49 +75,94 @@ body { font-family: 'Jeju Myeongjo', serif; }
     padding: 60px 0 40px 0;
 }
 
-.hero .container { padding-left: 14px; }
+.hero__title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
 
-.hero h1 { font-size: 32px; margin-bottom: 20px; }
-.hero p { font-size: 28px; }
+.hero__subtitle {
+    font-size: 28px;
+}
 
-/* БЛЮДО ДНЯ */
-.dish {
+/* DISH OF THE DAY */
+.dish-of-the-day {
     background-color: #F5F5F5;
     padding: 60px 0;
 }
 
-.dish .container { padding-left: 14px; }
-
-.dish h2 {
+.dish-of-the-day__title {
     font-size: 32px;
     margin-bottom: 40px;
 }
 
-.dish-content {
+.dish-of-the-day__content {
     display: flex;
     gap: 22px;
 }
 
-.dish-image {
-    width: 600px;
-    height: 420px;
-    background-color: #00C8B3;
+.dish-of-the-day__figure {
     flex-shrink: 0;
 }
 
-.dish-text p {
-    font-size: 32px;
+.dish-of-the-day__image {
+    width: 600px;
+    height: 420px;
+    background-color: #00C8B3;
+    background-image: url('../images/food.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.dish-of-the-day__description {
     max-width: 795px;
 }
 
-/* КНОПКА */
-.cta {
+.dish-of-the-day__description-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.dish-of-the-day__text {
+    font-size: 32px;
+}
+
+/* RESTAURANT INFO (ASIDE) */
+.restaurant-info {
     padding: 40px 0;
 }
 
-.cta .container { padding-left: 14px; }
+.restaurant-info__title {
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
 
-.btn {
+.restaurant-info__title:first-child {
+    margin-top: 0;
+}
+
+.restaurant-info__list {
+    list-style: none;
+    font-size: 24px;
+}
+
+.restaurant-info__item {
+    margin-bottom: 10px;
+}
+
+/* CTA SECTION */
+.cta-section {
+    padding: 40px 0;
+}
+
+.cta-section__title {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.cta-section__btn {
     display: inline-block;
     width: 250px;
     height: 50px;
@@ -99,14 +175,318 @@ body { font-family: 'Jeju Myeongjo', serif; }
     text-align: center;
 }
 
+/* MENU */
+.menu {
+    padding: 60px 0;
+}
+
+.menu__title {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.menu-category {
+    margin-bottom: 60px;
+}
+
+.menu-category__title {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.menu-category__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.menu-item {
+    display: flex;
+    gap: 20px;
+    max-width: 500px;
+}
+
+.menu-item__figure {
+    flex-shrink: 0;
+}
+
+.menu-item__image {
+    width: 150px;
+    height: 150px;
+    background-color: #00C8B3;
+    background-image: url('../images/food.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.menu-item__caption {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.menu-item__info {
+    flex: 1;
+}
+
+.menu-item__name {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.menu-item__description {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.menu-item__price {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ABOUT */
+.about {
+    padding: 60px 0;
+}
+
+.about__title {
+    font-size: 48px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.about__story {
+    margin-bottom: 60px;
+}
+
+.about__story-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.about__text {
+    font-size: 24px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.about__figure {
+    margin-top: 30px;
+}
+
+.about__image {
+    width: 100%;
+    max-width: 800px;
+    height: 400px;
+    background-color: #00C8B3;
+    background-image: url('../images/food.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.about__figcaption {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.about__chef {
+    margin-bottom: 60px;
+}
+
+.about__chef-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.about__chef-content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.about__chef-figure {
+    flex-shrink: 0;
+}
+
+.about__chef-image {
+    width: 200px;
+    height: 200px;
+    background-color: #00C8B3;
+    background-image: url('../images/food.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.about__chef-figcaption {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.about__chef-description {
+    flex: 1;
+}
+
+.about__chef-text {
+    font-size: 24px;
+    line-height: 1.6;
+}
+
+.about__facts {
+    background-color: #F5F5F5;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.about__facts-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.about__facts-list {
+    list-style: none;
+    font-size: 24px;
+    line-height: 2;
+}
+
+/* CONTACTS */
+.contacts {
+    padding: 60px 0;
+}
+
+.contacts__title {
+    font-size: 48px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.contacts__info {
+    margin-bottom: 40px;
+}
+
+.contacts__info-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.contacts__address,
+.contacts__phone,
+.contacts__email,
+.contacts__hours {
+    margin-bottom: 30px;
+}
+
+.contacts__address-title,
+.contacts__phone-title,
+.contacts__email-title,
+.contacts__hours-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.contacts__address-text,
+.contacts__phone-link,
+.contacts__email-link,
+.contacts__hours-list {
+    font-size: 20px;
+}
+
+.contacts__phone-link,
+.contacts__email-link {
+    color: black;
+    text-decoration: none;
+}
+
+.contacts__hours-list {
+    list-style: none;
+}
+
+.contacts__hours-item {
+    margin-bottom: 10px;
+}
+
+.contacts__map {
+    margin-top: 40px;
+}
+
+.contacts__map-image {
+    width: 100%;
+    height: 400px;
+    background-color: #00C8B3;
+    background-image: url('../images/food.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.contacts__map-caption {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.contacts__social {
+    background-color: #F5F5F5;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.contacts__social-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.contacts__social-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.contacts__social-link {
+    font-size: 24px;
+    color: black;
+    text-decoration: none;
+}
+
+/* FOOTER */
+.footer {
+    background-color: #F5F5F5;
+    padding: 40px 0;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: center;
+}
+
+.footer__title {
+    font-family: 'Inspiration', cursive;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.footer__copy {
+    font-size: 18px;
+}
+
 /* Анимация появления */
-section, .cta {
+section {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.6s ease;
 }
 
-section.show, .cta.show {
+section.show {
     opacity: 1;
     transform: translateY(0);
 }

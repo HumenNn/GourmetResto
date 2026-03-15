@@ -2,51 +2,95 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>GourmetResto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GourmetResto — Главная</title>
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Jeju+Myeongjo&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inspiration&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- HEADER -->
+<body itemscope itemtype="https://schema.org/Restaurant">
+    <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+
     <header class="header">
-        <div class="container header-content">
-            <div class="logo">GourmetResto</div>
-            <nav class="nav">
-                <a href="index.html">Main</a>
-                <a href="menu.html">Menu</a>
-                <a href="about.html">About us</a>
-                <a href="contacts.html">Contacts</a>
+        <div class="container header__content">
+            <div class="header__logo" itemprop="name">GourmetResto</div>
+            <nav class="header__nav nav" aria-label="Основная навигация">
+                <a href="index.html" class="nav__link nav__link--active">Главная</a>
+                <a href="menu.html" class="nav__link">Меню</a>
+                <a href="about.html" class="nav__link">О нас</a>
+                <a href="contacts.html" class="nav__link">Контакты</a>
             </nav>
         </div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="container">
-            <h1>Вкус, который вдохновляет</h1>
-            <p>Авторская кухня и атмосфера уюта в центре города</p>
-        </div>
-    </section>
+    <main id="main" class="main">
+        <section class="hero">
+            <div class="container hero__container">
+                <h1 class="hero__title">Вкус, который вдохновляет</h1>
+                <p class="hero__subtitle">
+                    <span itemprop="servesCuisine">Авторская кухня</span> и атмосфера уюта в центре города.
+                    Ценовой диапазон: <span itemprop="priceRange">1500–3000 ₽</span>
+                </p>
+                <time class="hero__date" datetime="2024-03-04">4 марта 2024</time>
+            </div>
+        </section>
 
-    <!-- БЛЮДО ДНЯ -->
-    <section class="dish">
-        <div class="container">
-            <h2>Блюдо дня</h2>
-            <div class="dish-content">
-                <div class="dish-image"></div>
-                <div class="dish-text">
-                    <p>Текст про самое вкусное блюдо в мире</p>
+        <article class="dish-of-the-day">
+            <div class="container">
+                <h2 class="dish-of-the-day__title">Блюдо дня</h2>
+                <div class="dish-of-the-day__content">
+                    <figure class="dish-of-the-day__figure">
+                        <img src="images/food.jpg" alt="Салат со шпинатом, жареным бататом и халуми с грецкими орехами" class="dish-of-the-day__image">
+                        <figcaption class="dish-of-the-day__figcaption">Наше фирменное блюдо дня</figcaption>
+                    </figure>
+                    <div class="dish-of-the-day__description">
+                        <h3 class="dish-of-the-day__description-title">Описание блюда</h3>
+                        <p class="dish-of-the-day__text">Блюдо, включающее салат из шпината, жареный батат и жареный халуми, украшенное грецкими орехами, маслом и нарезанным перцем чили.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <aside class="restaurant-info">
+            <div class="container">
+                <h2 class="restaurant-info__title">Часы работы</h2>
+                <ul class="restaurant-info__list">
+                    <li class="restaurant-info__item">
+                        Пн-Пт: <time datetime="12:00">12:00</time> - <time datetime="23:00">23:00</time>
+                    </li>
+                    <li class="restaurant-info__item">
+                        Сб-Вс: <time datetime="13:00">13:00</time> - <time datetime="02:00">02:00</time>
+                    </li>
+                </ul>
+                <h3 class="restaurant-info__title">Акции</h3>
+                <ul class="restaurant-info__list">
+                    <li class="restaurant-info__item">Скидка 20% в будни до <time datetime="16:00">16:00</time></li>
+                    <li class="restaurant-info__item">День рождения — десерт в подарок</li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-section__title">Попробуйте наши блюда</h2>
+                <a href="menu.html" class="cta-section__btn btn">Смотреть меню</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__content">
+                <div class="footer__info">
+                    <h4 class="footer__title">GourmetResto</h4>
+                    <p class="footer__copy">
+                        &copy; <time class="footer__date" datetime="2026">2026</time> Все права защищены
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- КНОПКА (теперь после серой секции, как в Фигме) -->
-    <div class="cta">
-        <div class="container">
-            <a href="menu.html" class="btn">Смотреть меню</a>
-        </div>
-    </div>
+    </footer>
 
     <script src="js/script.js"></script>
 </body>

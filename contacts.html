@@ -1,37 +1,104 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Menu - GourmetResto</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inspiration&family=Jeju+Myeongjo&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- HEADER (тот же код, что в index.html) -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GourmetResto — Контакты</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Jeju+Myeongjo&display=swap" rel="stylesheet">
+</head>
+<body itemscope itemtype="https://schema.org/Restaurant">
+    <a href="#main" class="skip-link">Перейти к основному содержимому</a>
+
     <header class="header">
-      <div class="container header-content">
-        <div class="logo">GourmetResto</div>
-        <nav class="nav">
-          <a href="index.html">Main</a>
-          <a href="menu.html" class="active">Menu</a>
-          <a href="about.html">About us</a>
-          <a href="contacts.html">Contacts</a>
-        </nav>
-      </div>
+        <div class="container header__content">
+            <div class="header__logo" itemprop="name">GourmetResto</div>
+            <nav class="header__nav nav" aria-label="Основная навигация">
+                <a href="index.html" class="nav__link">Главная</a>
+                <a href="menu.html" class="nav__link">Меню</a>
+                <a href="about.html" class="nav__link">О нас</a>
+                <a href="contacts.html" class="nav__link nav__link--active">Контакты</a>
+            </nav>
+        </div>
     </header>
 
-    <main>
-      <div class="container" style="padding: 120px 20px; text-align: center">
-        <h1 style="font-size: 48px">Меню</h1>
-        <p style="font-size: 28px; margin-top: 30px">Здесь будет полное меню (пока заглушка)</p>
-      </div>
+    <main id="main" class="main">
+        <section class="contacts">
+            <div class="container">
+                <h1 class="contacts__title">Контакты</h1>
+
+                <article class="contacts__info" itemscope itemtype="https://schema.org/LocalBusiness">
+                    <h2 class="contacts__info-title">Как нас найти</h2>
+                    
+                    <div class="contacts__address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                        <h3 class="contacts__address-title">Адрес</h3>
+                        <p class="contacts__address-text">
+                            <span itemprop="streetAddress">ул. Примерная, д. 10</span>,
+                            <span itemprop="addressLocality">Москва</span>
+                        </p>
+                    </div>
+
+                    <div class="contacts__phone">
+                        <h3 class="contacts__phone-title">Телефон</h3>
+                        <a class="contacts__phone-link" href="tel:+79991234567" itemprop="telephone">+7 (999) 123-45-67</a>
+                    </div>
+
+                    <div class="contacts__email">
+                        <h3 class="contacts__email-title">Email</h3>
+                        <a class="contacts__email-link" href="mailto:info@gourmetresto.ru" itemprop="email">info@gourmetresto.ru</a>
+                    </div>
+
+                    <div class="contacts__hours">
+                        <h3 class="contacts__hours-title">Часы работы</h3>
+                        <ul class="contacts__hours-list">
+                            <li class="contacts__hours-item">
+                                Пн-Пт: <time datetime="12:00">12:00</time> - <time datetime="23:00">23:00</time>
+                            </li>
+                            <li class="contacts__hours-item">
+                                Сб-Вс: <time datetime="13:00">13:00</time> - <time datetime="02:00">02:00</time>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <figure class="contacts__map">
+                        <img src="images/food.jpg" alt="Карта расположения ресторана GourmetResto" class="contacts__map-image">
+                        <figcaption class="contacts__map-caption">Мы находимся в центре города</figcaption>
+                    </figure>
+                </article>
+
+                <aside class="contacts__social">
+                    <h2 class="contacts__social-title">Мы в социальных сетях</h2>
+                    <ul class="contacts__social-list">
+                        <li class="contacts__social-item">
+                            <a class="contacts__social-link" href="#" aria-label="Мы ВКонтакте">ВКонтакте</a>
+                        </li>
+                        <li class="contacts__social-item">
+                            <a class="contacts__social-link" href="#" aria-label="Мы в Telegram">Telegram</a>
+                        </li>
+                        <li class="contacts__social-item">
+                            <a class="contacts__social-link" href="#" aria-label="Мы в Instagram">Instagram</a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
     </main>
 
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__content">
+                <div class="footer__info">
+                    <h4 class="footer__title">GourmetResto</h4>
+                    <p class="footer__copy">
+                        &copy; <time class="footer__date" datetime="2026">2026</time> Все права защищены
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script src="js/script.js"></script>
-    <!-- <script src="js/script.js"></script> -->
-  </body>
+</body>
 </html>

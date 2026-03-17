@@ -7,18 +7,23 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Jeju+Myeongjo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body itemscope itemtype="https://schema.org/Restaurant">
     <a href="#main" class="skip-link">Перейти к основному содержимому</a>
 
     <header class="header">
         <div class="container header__content">
-            <div class="header__logo" itemprop="name">GourmetResto</div>
-            <nav class="header__nav nav">
+            <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
+            <button class="header__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
+            <nav class="header__nav nav" aria-label="Основная навигация">
                 <a href="index.html" class="nav__link">Главная</a>
                 <a href="menu.html" class="nav__link">Меню</a>
-                <a href="about.html" class="nav__link">О нас</a>
+                <a href="about.html" class="nav__link nav__link--active">О нас</a>
                 <a href="contacts.html" class="nav__link">Контакты</a>
             </nav>
         </div>
@@ -28,13 +33,17 @@
         <section class="about">
             <div class="container">
                 <h1 class="about__title">О ресторане GourmetResto</h1>
-                
+
                 <article class="about__story">
                     <h2 class="about__story-title">Наша история</h2>
                     <p class="about__text">
-                        GourmetResto открылся <time datetime="2020-05-15">15 мая 2020 года</time> с простой миссией: 
-                        создавать блюда, которые вдохновляют и объединяют людей. За эти годы мы стали местом, 
+                        GourmetResto открылся <time datetime="2020-05-15">15 мая 2020 года</time> с простой миссией:
+                        создавать блюда, которые вдохновляют и объединяют людей. За эти годы мы стали местом,
                         где традиционные рецепты встречаются с современными кулинарными техниками.
+                    </p>
+                    <p class="about__text">
+                        Мы используем качественные материалы, которые получаем напрямую от фермеров.
+                        Наши повара — опытные люди в пищевой сфере. Поэтому качество и вкус наших блюд гарантированы.
                     </p>
                     <figure class="about__figure">
                         <img src="images/food.jpg" alt="Интерьер ресторана GourmetResto" class="about__image">
@@ -51,9 +60,8 @@
                         </figure>
                         <div class="about__chef-description">
                             <p class="about__chef-text">
-                                Шеф-повар с <time datetime="20">20-летним</time> стажем, работавший в лучших 
-                                ресторанах Европы. Александр создаёт уникальные блюда, сочетая классические 
-                                техники с авторскими решениями.
+                                Шеф-повар с 15-летним стажем, работавший в лучших ресторанах Европы.
+                                Виктор создаёт уникальные блюда, сочетая классические техники с авторскими решениями.
                             </p>
                         </div>
                     </div>
@@ -69,7 +77,7 @@
                             <time datetime="2022">2022</time> — Звезда гастрономического гида
                         </li>
                         <li class="about__facts-item">
-                            Более <span itemprop="numberEmployees">50</span> довольных гостей ежедневно
+                            Более 50 довольных гостей ежедневно
                         </li>
                     </ul>
                 </aside>
@@ -79,12 +87,22 @@
 
     <footer class="footer">
         <div class="container footer__container">
-            <div class="footer__content">
-                <div class="footer__info">
-                    <h4 class="footer__title">GourmetResto</h4>
-                    <p class="footer__copy">
-                        &copy; <time class="footer__date" datetime="2026">2026</time> Все права защищены
-                    </p>
+            <nav class="footer__nav">
+                <a href="index.html" class="footer__nav-link">Главная</a>
+                <a href="menu.html" class="footer__nav-link">Меню</a>
+                <a href="about.html" class="footer__nav-link">О нас</a>
+                <a href="contacts.html" class="footer__nav-link">Контакты</a>
+            </nav>
+            <hr class="footer__divider">
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    &copy; <time class="footer__date" datetime="2026">2026</time> GourmetResto. Все права защищены
+                </p>
+                <a href="index.html" class="footer__logo">GourmetResto</a>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="ВКонтакте">VK</a>
+                    <a href="#" class="footer__social-link" aria-label="Telegram">TG</a>
+                    <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
                 </div>
             </div>
         </div>

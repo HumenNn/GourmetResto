@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GourmetResto — Главная</title>
+    <title>GourmetResto — Ресторан авторской кухни</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inspiration&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body itemscope itemtype="https://schema.org/Restaurant">
     <a href="#main" class="skip-link">Перейти к основному содержимому</a>
 
+    <!-- HEADER -->
     <header class="header">
         <div class="container header__content">
-            <div class="header__logo" itemprop="name">GourmetResto</div>
+            <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
+            
+            <button class="header__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
+            
             <nav class="header__nav nav" aria-label="Основная навигация">
                 <a href="index.html" class="nav__link nav__link--active">Главная</a>
                 <a href="menu.html" class="nav__link">Меню</a>
@@ -25,68 +33,209 @@
     </header>
 
     <main id="main" class="main">
+        <!-- HERO SECTION -->
         <section class="hero">
             <div class="container hero__container">
-                <h1 class="hero__title">Вкус, который вдохновляет</h1>
-                <p class="hero__subtitle">
-                    <span itemprop="servesCuisine">Авторская кухня</span> и атмосфера уюта в центре города.
-                    Ценовой диапазон: <span itemprop="priceRange">1500–3000 ₽</span>
-                </p>
-                <time class="hero__date" datetime="2024-03-04">4 марта 2024</time>
-            </div>
-        </section>
+                <div class="hero__content-wrapper">
+                    <div class="hero__content">
+                        <h1 class="hero__title">Вкус, который<br>вдохновляет</h1>
+                        <p class="hero__subtitle">
+                            Авторская кухня и атмосфера уюта в центре города.
+                            Ценовой диапазон: 50-200 RUB
+                        </p>
+                        <div class="hero__buttons">
+                            <a href="menu.html" class="hero__btn hero__btn--primary">Заказать стол</a>
+                            <a href="menu.html" class="hero__btn hero__btn--outline">Смотреть меню</a>
+                        </div>
+                    </div>
 
-        <article class="dish-of-the-day">
-            <div class="container">
-                <h2 class="dish-of-the-day__title">Блюдо дня</h2>
-                <div class="dish-of-the-day__content">
-                    <figure class="dish-of-the-day__figure">
-                        <img src="images/food.jpg" alt="Салат со шпинатом, жареным бататом и халуми с грецкими орехами" class="dish-of-the-day__image">
-                        <figcaption class="dish-of-the-day__figcaption">Наше фирменное блюдо дня</figcaption>
-                    </figure>
-                    <div class="dish-of-the-day__description">
-                        <h3 class="dish-of-the-day__description-title">Описание блюда</h3>
-                        <p class="dish-of-the-day__text">Блюдо, включающее салат из шпината, жареный батат и жареный халуми, украшенное грецкими орехами, маслом и нарезанным перцем чили.</p>
+                    <div class="hero__image-wrapper">
+                        <figure class="hero__figure">
+                            <img src="images/hero-dish.jpg" alt="Фирменное блюдо ресторана" class="hero__image">
+                        </figure>
+                    </div>
+                </div>
+
+                <div class="hero__slider">
+                    <button class="hero__slider-btn hero__slider-btn--prev" aria-label="Предыдущий слайд">←</button>
+                    <span class="hero__slider-counter">01/<sup>12</sup></span>
+                    <button class="hero__slider-btn hero__slider-btn--next" aria-label="Следующий слайд">→</button>
+                    <div class="hero__slider-thumbnails">
+                        <img src="images/butery.jpg" alt="Блюдо 1" class="hero__slider-thumb">
+                        <img src="images/avocado_toast.jpg" alt="Блюдо 2" class="hero__slider-thumb">
+                        <img src="images/salad.jpg" alt="Блюдо 3" class="hero__slider-thumb">
                     </div>
                 </div>
             </div>
-        </article>
+        </section>
 
-        <aside class="restaurant-info">
+        <!-- BEST SELLING SECTION -->
+        <section class="best-selling">
             <div class="container">
-                <h2 class="restaurant-info__title">Часы работы</h2>
-                <ul class="restaurant-info__list">
-                    <li class="restaurant-info__item">
-                        Пн-Пт: <time datetime="12:00">12:00</time> - <time datetime="23:00">23:00</time>
-                    </li>
-                    <li class="restaurant-info__item">
-                        Сб-Вс: <time datetime="13:00">13:00</time> - <time datetime="02:00">02:00</time>
-                    </li>
-                </ul>
-                <h3 class="restaurant-info__title">Акции</h3>
-                <ul class="restaurant-info__list">
-                    <li class="restaurant-info__item">Скидка 20% в будни до <time datetime="16:00">16:00</time></li>
-                    <li class="restaurant-info__item">День рождения — десерт в подарок</li>
-                </ul>
+                <div class="best-selling__header">
+                    <h2 class="best-selling__title">Популярные блюда</h2>
+                    <div class="best-selling__divider"></div>
+                    <p class="best-selling__description">
+                        Наши лучшие творения, которые любят все гости. Лёгкость и изысканность вкуса заставляют возвращаться снова и снова.
+                    </p>
+                </div>
+                
+                <div class="best-selling__grid">
+                    <article class="product-card" itemscope itemtype="https://schema.org/Product">
+                        <img src="images/salad.jpg" alt="Салат с бататом и халуми" class="product-card__image" itemprop="image">
+                        <h3 class="product-card__name" itemprop="name">Салат с бататом и халуми (300г)</h3>
+                        <div class="product-card__rating">
+                            <span class="product-card__stars" aria-label="Рейтинг 4.0 из 5">★★★★☆</span>
+                            <span class="product-card__rating-text">4.0 Рейтинг</span>
+                        </div>
+                        <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span class="product-card__price-value" itemprop="price">50</span>
+                            <span class="product-card__price-currency" itemprop="priceCurrency">RUB</span>
+                        </div>
+                    </article>
+                    
+                    <article class="product-card" itemscope itemtype="https://schema.org/Product">
+                        <img src="images/pasta.jpg" alt="Паста карбонара" class="product-card__image" itemprop="image">
+                        <h3 class="product-card__name" itemprop="name">Паста карбонара (400г)</h3>
+                        <div class="product-card__rating">
+                            <span class="product-card__stars" aria-label="Рейтинг 4.5 из 5">★★★★★</span>
+                            <span class="product-card__rating-text">4.5 Рейтинг</span>
+                        </div>
+                        <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span class="product-card__price-value" itemprop="price">75</span>
+                            <span class="product-card__price-currency" itemprop="priceCurrency">RUB</span>
+                        </div>
+                    </article>
+                    
+                    <article class="product-card" itemscope itemtype="https://schema.org/Product">
+                        <img src="images/salmon_steak.jpg" alt="Стейк из лосося" class="product-card__image" itemprop="image">
+                        <h3 class="product-card__name" itemprop="name">Стейк из лосося (350г)</h3>
+                        <div class="product-card__rating">
+                            <span class="product-card__stars" aria-label="Рейтинг 4.8 из 5">★★★★★</span>
+                            <span class="product-card__rating-text">4.8 Рейтинг</span>
+                        </div>
+                        <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span class="product-card__price-value" itemprop="price">100</span>
+                            <span class="product-card__price-currency" itemprop="priceCurrency">RUB</span>
+                        </div>
+                    </article>
+                    
+                    <article class="product-card" itemscope itemtype="https://schema.org/Product">
+                        <img src="images/tiramisu.jpg" alt="Тирамису" class="product-card__image" itemprop="image">
+                        <h3 class="product-card__name" itemprop="name">Тирамису (200г)</h3>
+                        <div class="product-card__rating">
+                            <span class="product-card__stars" aria-label="Рейтинг 4.7 из 5">★★★★★</span>
+                            <span class="product-card__rating-text">4.7 Рейтинг</span>
+                        </div>
+                        <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span class="product-card__price-value" itemprop="price">49</span>
+                            <span class="product-card__price-currency" itemprop="priceCurrency">RUB</span>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="best-selling__more">
+                    <a href="menu.html" class="best-selling__btn">Смотреть всё меню →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT CHEF SECTION -->
+        <section class="about-chef">
+            <div class="container">
+                <div class="about-chef__content">
+                    <div class="about-chef__text">
+                        <h2 class="about-chef__title">Шеф-повар<br>с открытой душой</h2>
+                        <p class="about-chef__description">
+                            Мы используем качественные продукты, которые получаем напрямую от фермеров.
+                            Наши повара — опытные профессионалы в кулинарной сфере. Поэтому качество
+                            и вкус наших блюд гарантированы. Это так вкусно, что вы обязательно вернётесь!
+                        </p>
+                    </div>
+                    <figure class="about-chef__figure">
+                        <img src="images/chef.jpg" alt="Шеф-повар за работой" class="about-chef__image">
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATMOSPHERE SECTION -->
+        <section class="atmosphere">
+            <div class="container">
+                <div class="atmosphere__content">
+                    <img src="images/interior.jpg" alt="Интерьер ресторана" class="atmosphere__image">
+                    <div class="atmosphere__text">
+                        <h2 class="atmosphere__title">Приходите и выберите<br>свои любимые блюда</h2>
+                        <p class="atmosphere__description">
+                            Приходите в наш ресторан, чтобы насладиться вкусом блюд, только что из печи.
+                            Наслаждайтесь чашечкой кофе или чая в нашем уютном зале. Идеальное место
+                            для беседы, встречи с друзьями или командой.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA SECTION -->
+        <aside class="cta-large">
+            <div class="container">
+                <div class="cta-large__content">
+                    <h2 class="cta-large__title">Быстрая готовка!</h2>
+                    <p class="cta-large__subtitle">
+                        Пожалуйста, посетите наш  ресторан или позвоните нам по телефону
+                        <a href="tel:+88005553535">+8-800-555-35-35</a> (с <time datetime="10:00">10:00</time> до <time datetime="19:00">19:00</time>) для размещения заказов.
+                    </p>
+                </div>
             </div>
         </aside>
 
-        <section class="cta-section">
+        <!-- TESTIMONIALS SECTION -->
+        <section class="testimonials">
             <div class="container">
-                <h2 class="cta-section__title">Попробуйте наши блюда</h2>
-                <a href="menu.html" class="cta-section__btn btn">Смотреть меню</a>
+                <div class="testimonials__content">
+                    <span class="testimonials__badge">ОТЗЫВЫ</span>
+                    <blockquote class="testimonials__quote">
+                        "Блюда в этом ресторане действительно великолепны. Заказывал стейк из лосося —
+                        было просто потрясающе. Определённо стоит попробовать!"
+                    </blockquote>
+                    <div class="testimonials__author">
+                        <img src="images/author.jpg" alt="Дмитрий нагиев" class="testimonials__author-image">
+                        <cite class="testimonials__author-info">
+                            <span class="testimonials__author-name">Дмитрий Нагиев</span>
+                            <span class="testimonials__author-title">Генеральный директор ресторана</span>
+                        </cite>
+                    </div>
+                    <div class="testimonials__dots">
+                        <span class="testimonials__dot testimonials__dot--active"></span>
+                        <span class="testimonials__dot"></span>
+                        <span class="testimonials__dot"></span>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer">
-        <div class="container footer__container">
-            <div class="footer__content">
-                <div class="footer__info">
-                    <h4 class="footer__title">GourmetResto</h4>
-                    <p class="footer__copy">
-                        &copy; <time class="footer__date" datetime="2026">2026</time> Все права защищены
-                    </p>
+        <div class="container">
+            <div class="footer__top">
+                <a href="index.html" class="footer__logo">GourmetResto</a>
+                <nav class="footer__nav">
+                    <a href="index.html" class="footer__nav-link">Главная</a>
+                    <a href="menu.html" class="footer__nav-link">Меню</a>
+                    <a href="about.html" class="footer__nav-link">О нас</a>
+                    <a href="contacts.html" class="footer__nav-link">Контакты</a>
+                </nav>
+            </div>
+            
+            <hr class="footer__divider">
+            
+            <div class="footer__bottom">
+                <p class="footer__copy">© 2026 GourmetResto. Все права защищены.</p>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="ВКонтакте">VK</a>
+                    <a href="#" class="footer__social-link" aria-label="Telegram">TG</a>
+                    <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
                 </div>
             </div>
         </div>

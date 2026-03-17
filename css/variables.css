@@ -1,0 +1,52 @@
+:root {
+    /* Цвета из макета Figma */
+    --color-primary: #4A1D1F;        /* Тёмно-коричневый (основной) */
+    --color-secondary: #FBEDCD;      /* Светло-бежевый (фон акцентов) */
+    --color-accent: #56B280;         /* Зелёный (декоративный) */
+    --color-text: #272727;           /* Тёмно-серый (текст) */
+    --color-text-light: #707070;     /* Светло-серый (вторичный текст) */
+    --color-white: #FFFFFF;          /* Белый */
+    --color-background: #F7F8F9;     /* Светлый фон */
+    --color-border: rgba(74, 29, 31, 0.22);  /* Полупрозрачная граница */
+    --color-shadow: rgba(0, 0, 0, 0.20);     /* Тень */
+
+    /* Типографика */
+    --font-family-main: 'Poppins', sans-serif;
+    --font-family-cursive: 'Inspiration', cursive;
+    
+    --font-size-xs: 0.75rem;         /* 12px */
+    --font-size-sm: 0.875rem;        /* 14px */
+    --font-size-base: 1rem;          /* 16px */
+    --font-size-lg: 1.25rem;         /* 20px */
+    --font-size-xl: 1.5rem;          /* 24px */
+    --font-size-2xl: 2rem;           /* 32px */
+    --font-size-3xl: 2.5rem;         /* 40px */
+    --font-size-4xl: 3rem;           /* 48px */
+
+    /* Отступы */
+    --spacing-xs: 0.5rem;            /* 8px */
+    --spacing-sm: 1rem;              /* 16px */
+    --spacing-md: 1.5rem;            /* 24px */
+    --spacing-lg: 2rem;              /* 32px */
+    --spacing-xl: 3rem;              /* 48px */
+    --spacing-2xl: 4rem;             /* 64px */
+
+    /* Breakpoints */
+    --breakpoint-mobile: 480px;
+    --breakpoint-tablet: 768px;
+    --breakpoint-desktop: 1024px;
+    --breakpoint-large: 1440px;
+
+    /* Размеры */
+    --header-height: 75px;
+    --container-width: 1440px;
+    --border-radius: 8px;
+    --border-radius-lg: 18px;
+    --border-radius-xl: 33px;
+    --border-radius-xxl: 47px;
+    
+    /* Тени */
+    --shadow-sm: 0px 4px 19px var(--color-shadow);
+    --shadow-md: 4px 4px 16px var(--color-shadow);
+    --shadow-lg: 4px 4px 20px rgba(0, 0, 0, 0.16);
+}

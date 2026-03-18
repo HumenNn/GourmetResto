@@ -7,14 +7,19 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Jeju+Myeongjo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body itemscope itemtype="https://schema.org/Restaurant">
     <a href="#main" class="skip-link">Перейти к основному содержимому</a>
 
     <header class="header">
         <div class="container header__content">
-            <div class="header__logo" itemprop="name">GourmetResto</div>
+            <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
+            <button class="header__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
             <nav class="header__nav nav" aria-label="Основная навигация">
                 <a href="index.html" class="nav__link">Главная</a>
                 <a href="menu.html" class="nav__link">Меню</a>
@@ -31,7 +36,7 @@
 
                 <article class="contacts__info" itemscope itemtype="https://schema.org/LocalBusiness">
                     <h2 class="contacts__info-title">Как нас найти</h2>
-                    
+
                     <div class="contacts__address" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                         <h3 class="contacts__address-title">Адрес</h3>
                         <p class="contacts__address-text">
@@ -88,12 +93,22 @@
 
     <footer class="footer">
         <div class="container footer__container">
-            <div class="footer__content">
-                <div class="footer__info">
-                    <h4 class="footer__title">GourmetResto</h4>
-                    <p class="footer__copy">
-                        &copy; <time class="footer__date" datetime="2026">2026</time> Все права защищены
-                    </p>
+            <nav class="footer__nav">
+                <a href="index.html" class="footer__nav-link">Главная</a>
+                <a href="menu.html" class="footer__nav-link">Меню</a>
+                <a href="about.html" class="footer__nav-link">О нас</a>
+                <a href="contacts.html" class="footer__nav-link">Контакты</a>
+            </nav>
+            <hr class="footer__divider">
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    &copy; <time class="footer__date" datetime="2026">2026</time> GourmetResto. Все права защищены
+                </p>
+                <a href="index.html" class="footer__logo">GourmetResto</a>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link" aria-label="ВКонтакте">VK</a>
+                    <a href="#" class="footer__social-link" aria-label="Telegram">TG</a>
+                    <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
                 </div>
             </div>
         </div>

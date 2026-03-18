@@ -1,0 +1,115 @@
+/* HEADER */
+.header {
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--color-white);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 0.5px solid rgba(86, 178, 128, 0.20);
+}
+
+.header__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+}
+
+.header__logo {
+    font-family: var(--font-family-main);
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: 2.7px;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+/* BURGER MENU */
+.header__burger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    z-index: 1001;
+}
+
+.header__burger-line {
+    width: 25px;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.header__burger--active .header__burger-line:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.header__burger--active .header__burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.header__burger--active .header__burger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* NAVIGATION */
+.header__nav {
+    display: none;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--color-white);
+    flex-direction: column;
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header__nav--active {
+    display: flex;
+}
+
+.nav__link {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-main);
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.nav__link:hover,
+.nav__link--active {
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+/* DESKTOP NAVIGATION */
+@media (min-width: 768px) {
+    .header__burger {
+        display: none;
+    }
+
+    .header__nav {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        padding: 0;
+        gap: 46px;
+        background: none;
+        box-shadow: none;
+    }
+
+    .nav__link {
+        font-size: 16px;
+    }
+}

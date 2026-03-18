@@ -10,8 +10,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xl);
-    position: relative;
-    z-index: 1;
 }
 
 .hero__content-wrapper {
@@ -68,10 +66,6 @@
 }
 
 
-.hero__image-wrapper {
-    position: relative;
-}
-
 
 .hero__image {
     width: 100%;
@@ -93,8 +87,6 @@
     border-radius: 100px;
     width: fit-content;
     margin: calc(var(--spacing-xl) - 20px) auto 0;
-    position: relative;
-    z-index: 2;
 }
 
 .hero__slider-btn {
@@ -448,7 +440,6 @@
 .testimonials {
     padding: var(--spacing-2xl) 0;
     background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-white) 100%);
-    position: relative;
 }
 
 .testimonials__content {
@@ -457,7 +448,6 @@
     align-items: center;
     gap: var(--spacing-lg);
     text-align: center;
-    position: relative;
 }
 
 .testimonials__badge {

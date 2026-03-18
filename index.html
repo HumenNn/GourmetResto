@@ -16,13 +16,13 @@
     <header class="header">
         <div class="container header__content">
             <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
-            
+
             <button class="header__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
                 <span class="header__burger-line"></span>
                 <span class="header__burger-line"></span>
                 <span class="header__burger-line"></span>
             </button>
-            
+
             <nav class="header__nav nav" aria-label="Основная навигация">
                 <a href="index.html" class="nav__link nav__link--active">Главная</a>
                 <a href="menu.html" class="nav__link">Меню</a>
@@ -34,8 +34,18 @@
 
     <main id="main" class="main">
         <!-- HERO SECTION -->
-        <section class="hero">
+        <section class="hero" itemscope itemtype="https://schema.org/Restaurant">
             <div class="container hero__container">
+                <meta itemprop="name" content="GourmetResto">
+                <meta itemprop="priceRange" content="1500-3000 RUB">
+                <meta itemprop="telephone" content="+7-800-555-35-35">
+                <meta itemprop="servesCuisine" content="Авторская кухня">
+                <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <meta itemprop="streetAddress" content="ул. Примерная, д. 10">
+                    <meta itemprop="addressLocality" content="Москва">
+                    <meta itemprop="addressCountry" content="Россия">
+                </div>
+                <img itemprop="image" content="images/hero-dish.jpg" style="display:none">
                 <div class="hero__content-wrapper">
                     <div class="hero__content">
                         <h1 class="hero__title">Вкус, который<br>вдохновляет</h1>
@@ -85,7 +95,7 @@
                         <img src="images/salad.jpg" alt="Салат с бататом и халуми" class="product-card__image" itemprop="image">
                         <h3 class="product-card__name" itemprop="name">Салат с бататом и халуми (300г)</h3>
                         <div class="product-card__rating">
-                            <span class="product-card__stars" aria-label="Рейтинг 4.0 из 5">★★★★☆</span>
+                            <span class="product-card__stars">★★★★☆</span>
                             <span class="product-card__rating-text">4.0 Рейтинг</span>
                         </div>
                         <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -98,7 +108,7 @@
                         <img src="images/pasta.jpg" alt="Паста карбонара" class="product-card__image" itemprop="image">
                         <h3 class="product-card__name" itemprop="name">Паста карбонара (400г)</h3>
                         <div class="product-card__rating">
-                            <span class="product-card__stars" aria-label="Рейтинг 4.5 из 5">★★★★★</span>
+                            <span class="product-card__stars">★★★★★</span>
                             <span class="product-card__rating-text">4.5 Рейтинг</span>
                         </div>
                         <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -111,7 +121,7 @@
                         <img src="images/salmon_steak.jpg" alt="Стейк из лосося" class="product-card__image" itemprop="image">
                         <h3 class="product-card__name" itemprop="name">Стейк из лосося (350г)</h3>
                         <div class="product-card__rating">
-                            <span class="product-card__stars" aria-label="Рейтинг 4.8 из 5">★★★★★</span>
+                            <span class="product-card__stars">★★★★★</span>
                             <span class="product-card__rating-text">4.8 Рейтинг</span>
                         </div>
                         <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -124,7 +134,7 @@
                         <img src="images/tiramisu.jpg" alt="Тирамису" class="product-card__image" itemprop="image">
                         <h3 class="product-card__name" itemprop="name">Тирамису (200г)</h3>
                         <div class="product-card__rating">
-                            <span class="product-card__stars" aria-label="Рейтинг 4.7 из 5">★★★★★</span>
+                            <span class="product-card__stars">★★★★★</span>
                             <span class="product-card__rating-text">4.7 Рейтинг</span>
                         </div>
                         <div class="product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">

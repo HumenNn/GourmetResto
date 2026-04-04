@@ -59,7 +59,6 @@ if (bookingForm) {
       let value = e.target.value.replace(/\D/g, '');
 
       if (value.startsWith('375')) value = value.substring(3);
-      if (value.startsWith('7') || value.startsWith('8')) value = value.substring(1);
       if (value.length > 9) value = value.substring(0, 9);
 
       let formattedValue = '+375';

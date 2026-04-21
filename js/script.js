@@ -2,6 +2,9 @@
    GourmetResto - Основной JavaScript файл
    ===================================================== */
 
+// Ждём пока загрузится DOM
+document.addEventListener('DOMContentLoaded', function() {
+  
 // =====================================================
 // БУРГЕР-МЕНЮ
 // =====================================================
@@ -138,15 +141,17 @@ if (bookingForm) {
 
 // Симуляция отправки бронирования на сервер
 async function sendBookingToAPI(bookingData) {
-  const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.BOOKINGS_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(bookingData),
-  });
-
-  if (!response.ok) {
-    throw new Error('Server error');
+  // Проверяем есть ли интернет
+  if (!navigator.onLine) {
+    throw new Error('Нет соединения');
   }
+  
+  // Симуляция успешного ответа (в реальном API был бы fetch)
+  // Для本地ногоJSON просто возвращаем успех
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({ success: true }), 500);
+  });
+}
 
   return response.json();
 }
@@ -283,6 +288,8 @@ if (testimonialsSlider) {
     autoSlideInterval = setInterval(nextSlide, 5000);
   });
 }
+
+}); // Конец DOMContentLoaded
 
 // =====================================================
 // API СЕРВИС (симуляция внешнего API)

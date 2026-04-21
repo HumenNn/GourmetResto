@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test - Booking Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+      }
+      .form-input.error {
+        border-color: red;
+      }
+      .form-input.success {
+        border-color: green;
+      }
+      .form-error {
+        color: red;
+        font-size: 12px;
+      }
+      .form-success {
+        color: green;
+        padding: 10px;
+        border: 1px solid green;
+        display: none;
+      }
+      .form-success.show {
+        display: block;
+      }
+      button {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Booking Form Test</h1>
+
+    <form id="bookingForm" novalidate>
+      <div class="form-group">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" class="form-input" required />
+        <span class="form-error" id="name-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Телефон:</label>
+        <input type="tel" id="phone" name="phone" class="form-input" required />
+        <span class="form-error" id="phone-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" class="form-input" required />
+        <span class="form-error" id="email-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Дата:</label>
+        <input type="date" id="date" name="date" class="form-input" required />
+        <span class="form-error" id="date-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="time">Время:</label>
+        <input type="time" id="time" name="time" class="form-input" required />
+        <span class="form-error" id="time-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="guests">Количество гостей:</label>
+        <select id="guests" name="guests" class="form-input" required>
+          <option value="">Выберите</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <span class="form-error" id="guests-error"></span>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="agreement" name="agreement" required />
+          Согласие на обработку данных
+        </label>
+        <span class="form-error" id="agreement-error"></span>
+      </div>
+
+      <button type="submit">Забронировать стол</button>
+    </form>
+
+    <div class="form-success" id="form-success"></div>
+
+    <script>
+      function validateField(field) {
+        if (!field) return true;
+
+        const fieldName = field.name;
+        const errorElement = document.getElementById(`${fieldName}-error`);
+        let isValid = true;
+        let errorMessage = '';
+
+        field.classList.remove('error', 'success');
+
+        const isRequired = field.hasAttribute('required');
+        const value = field.value.trim();
+
+        if (isRequired && !value) {
+          isValid = false;
+          errorMessage = 'Это поле обязательно для заполнения';
+        } else {
+          switch (fieldName) {
+            case 'name':
+              if (value && value.length < 2) {
+                isValid = false;
+                errorMessage = 'Имя должно содержать минимум 2 символа';
+              } else if (value && !/^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value)) {
+                isValid = false;
+                errorMessage = 'Имя должно содержать только буквы';
+              }
+              break;
+
+            case 'phone':
+              if (value) {
+                const phoneDigits = value.replace(/\D/g, '');
+                if (phoneDigits.length !== 12 || !phoneDigits.startsWith('375')) {
+                  isValid = false;
+                  errorMessage = 'Введите корректный номер телефона';
+                }
+              }
+              break;
+
+            case 'email':
+              if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                isValid = false;
+                errorMessage = 'Введите корректный email адрес';
+              }
+              break;
+
+            case 'date':
+              if (value) {
+                const selectedDate = new Date(value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                if (selectedDate < today) {
+                  isValid = false;
+                  errorMessage = 'Выберите дату не раньше сегодняшней';
+                }
+              }
+              break;
+
+            case 'time':
+              if (value) {
+                const [hours, minutes] = value.split(':').map(Number);
+                const timeValue = hours * 60 + minutes;
+                if (timeValue < 10 * 60 || timeValue > 23 * 60) {
+                  isValid = false;
+                  errorMessage = 'Выберите время с 10:00 до 23:00';
+                }
+              }
+              break;
+
+            case 'agreement':
+              if (!field.checked) {
+                isValid = false;
+                errorMessage = 'Необходимо согласие на обработку данных';
+              }
+              break;
+          }
+        }
+
+        if (!isValid) {
+          field.classList.add('error');
+          if (errorElement) errorElement.textContent = errorMessage;
+        } else if (value || (fieldName === 'agreement' && field.checked)) {
+          field.classList.add('success');
+          if (errorElement) errorElement.textContent = '';
+        }
+
+        return isValid;
+      }
+
+      function initializeBookingForm() {
+        console.log('Initializing booking form...');
+        const bookingForm = document.getElementById('bookingForm');
+
+        if (bookingForm) {
+          console.log('Booking form found, setting up validation...');
+
+          const dateInput = document.getElementById('date');
+          if (dateInput) {
+            dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+          }
+
+          const phoneInput = document.getElementById('phone');
+          if (phoneInput) {
+            phoneInput.addEventListener('input', (e) => {
+              let value = e.target.value.replace(/\D/g, '');
+
+              if (value.startsWith('375')) value = value.substring(3);
+              if (value.length > 9) value = value.substring(0, 9);
+
+              let formattedValue = '+375';
+              if (value.length > 0) formattedValue += ' ' + value.substring(0, 2);
+              if (value.length >= 3) formattedValue += ' ' + value.substring(2, 5);
+              if (value.length >= 6) formattedValue += ' ' + value.substring(5, 7);
+              if (value.length >= 8) formattedValue += ' ' + value.substring(7, 9);
+
+              e.target.value = formattedValue;
+            });
+          }
+
+          const formInputs = bookingForm.querySelectorAll('.form-input');
+          formInputs.forEach((input) => {
+            input.addEventListener('blur', () => validateField(input));
+          });
+
+          bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let isValid = true;
+            const fields = ['name', 'phone', 'email', 'date', 'time', 'guests', 'agreement'];
+
+            fields.forEach((fieldName) => {
+              const field = bookingForm.querySelector(`[name="${fieldName}"]`);
+              if (field && !validateField(field)) isValid = false;
+            });
+
+            if (isValid) {
+              const successMessage = document.getElementById('form-success');
+              if (successMessage) {
+                successMessage.textContent =
+                  'Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.';
+                successMessage.classList.add('show');
+              }
+
+              bookingForm.reset();
+              formInputs.forEach((input) => input.classList.remove('success'));
+
+              setTimeout(() => {
+                if (successMessage) successMessage.classList.remove('show');
+              }, 5000);
+            }
+          });
+
+          console.log('Booking form initialized successfully');
+        } else {
+          console.error('Booking form not found!');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('Test page loaded');
+        initializeBookingForm();
+      });
+    </script>
+  </body>
+</html>

@@ -65,10 +65,13 @@ function createFallbackServices() {
 }
 
 // Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   console.log('DOM loaded, starting initialization...');
 
-  // Простая инициализация без модулей для тестирования
+  // Инициализация сервисов
+  await initializeServices();
+
+  // Инициализация общих компонентов
   initializeBurgerMenu();
   initializeTestimonialsSlider();
 

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test - Menu Filter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .menu__filter {
+        margin-bottom: 20px;
+      }
+      .menu__filter-btn {
+        padding: 10px 20px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        background: white;
+        cursor: pointer;
+      }
+      .menu__filter-btn.active {
+        background: #007bff;
+        color: white;
+      }
+      .menu-category {
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      .hidden {
+        display: none;
+      }
+      .menu-item {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Menu Filter Test</h1>
+
+    <div class="menu">
+      <div class="menu__filter">
+        <button class="menu__filter-btn menu__filter-btn--active" data-category="all">Все</button>
+        <button class="menu__filter-btn" data-category="starters">Закуски</button>
+        <button class="menu__filter-btn" data-category="mains">Основные блюда</button>
+        <button class="menu__filter-btn" data-category="desserts">Десерты</button>
+      </div>
+
+      <!-- Статические элементы для тестирования -->
+      <article class="menu-category" data-category="starters">
+        <h2 class="menu-category__title">Закуски</h2>
+        <div class="menu-category__list">
+          <div class="menu-item">Салат с бататом</div>
+          <div class="menu-item">Брускетта с томатами</div>
+        </div>
+      </article>
+
+      <article class="menu-category" data-category="mains">
+        <h2 class="menu-category__title">Основные блюда</h2>
+        <div class="menu-category__list">
+          <div class="menu-item">Паста карбонара</div>
+          <div class="menu-item">Стейк из лосося</div>
+        </div>
+      </article>
+    </div>
+
+    <script>
+      // Тестовая версия initializeMenuFilter
+      function initializeMenuFilter() {
+        const filterButtons = document.querySelectorAll('.menu__filter-btn');
+
+        console.log('Initializing menu filter, found buttons:', filterButtons.length);
+
+        if (filterButtons.length > 0) {
+          filterButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+              console.log('Filter button clicked:', button.getAttribute('data-category'));
+
+              filterButtons.forEach((btn) => {
+                btn.classList.remove('menu__filter-btn--active', 'active');
+              });
+              button.classList.add('menu__filter-btn--active', 'active');
+
+              const category = button.getAttribute('data-category');
+              applyMenuFilter(category);
+            });
+          });
+          console.log('Menu filter initialized successfully');
+        } else {
+          console.error('No filter buttons found!');
+        }
+      }
+
+      function applyMenuFilter(category) {
+        const menuCategories = document.querySelectorAll('.menu-category');
+
+        console.log('Applying filter:', category, 'Found categories:', menuCategories.length);
+
+        menuCategories.forEach((categoryEl) => {
+          const itemCategory = categoryEl.getAttribute('data-category');
+          console.log(
+            'Category element:',
+            itemCategory,
+            'should show:',
+            category === 'all' || itemCategory === category
+          );
+
+          if (category === 'all' || itemCategory === category) {
+            categoryEl.classList.remove('hidden');
+          } else {
+            categoryEl.classList.add('hidden');
+          }
+        });
+      }
+
+      // Инициализация при загрузке
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('Test page loaded');
+        initializeMenuFilter();
+      });
+    </script>
+  </body>
+</html>

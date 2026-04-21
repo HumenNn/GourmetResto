@@ -218,3 +218,23 @@ body {
     padding: var(--spacing-md);
   }
 }
+
+/* Меню - индикаторы API */
+.menu-loader,
+.menu-error {
+  text-align: center;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  margin: var(--spacing-md) 0;
+}
+
+.menu-loader {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+.menu-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}

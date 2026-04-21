@@ -86,23 +86,44 @@ if (bookingForm) {
     input.addEventListener('blur', () => validateField(input));
   });
 
-  bookingForm.addEventListener('submit', (e) => {
+  bookingForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     let isValid = true;
     const fields = ['name', 'phone', 'email', 'date', 'time', 'guests', 'agreement'];
 
+    // Собираем данные формы
+    const bookingData = {};
     fields.forEach((fieldName) => {
       const field = bookingForm.querySelector(`[name="${fieldName}"]`);
-      if (field && !validateField(field)) isValid = false;
+      if (field) {
+        bookingData[fieldName] = field.value;
+        if (!validateField(field)) isValid = false;
+      }
     });
 
     if (isValid) {
-      const successMessage = document.getElementById('form-success');
-      if (successMessage) {
-        successMessage.textContent =
-          'Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.';
-        successMessage.classList.add('show');
+      try {
+        // Пытаемся отправить на сервер (симуляция)
+        await sendBookingToAPI(bookingData);
+
+        const successMessage = document.getElementById('form-success');
+        if (successMessage) {
+          successMessage.textContent =
+            'Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.';
+          successMessage.classList.add('show');
+        }
+      } catch (error) {
+        // Если нет сети - сохраняем офлайн
+        console.log('Нет сети, сохраняем офлайн');
+        saveOfflineBooking(bookingData);
+
+        const successMessage = document.getElementById('form-success');
+        if (successMessage) {
+          successMessage.innerHTML =
+            '<span style="color: orange;">Нет соединения. Бронирование сохранено и будет отправлено при подключении к сети.</span>';
+          successMessage.classList.add('show');
+        }
       }
 
       bookingForm.reset();
@@ -113,6 +134,21 @@ if (bookingForm) {
       }, 5000);
     }
   });
+}
+
+// Симуляция отправки бронирования на сервер
+async function sendBookingToAPI(bookingData) {
+  const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.BOOKINGS_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(bookingData),
+  });
+
+  if (!response.ok) {
+    throw new Error('Server error');
+  }
+
+  return response.json();
 }
 
 function validateField(field) {
@@ -362,12 +398,47 @@ document.addEventListener('DOMContentLoaded', async () => {
   const menuPage = window.location.pathname.includes('menu.html');
 
   if (menuPage) {
-    console.log('Загружаем меню с API...');
     try {
+      showLoadingState();
       const menu = await loadMenuWithCache();
+      hideLoadingState();
       console.log('Загружено блюд:', menu.length);
     } catch (error) {
+      hideLoadingState();
+      showErrorState(error.message);
       console.error('Не удалось загрузить меню:', error);
     }
   }
 });
+
+// Индикатор загрузки
+function showLoadingState() {
+  const menu = document.querySelector('.menu');
+  if (!menu) return;
+
+  const loader = document.createElement('div');
+  loader.id = 'menu-loader';
+  loader.className = 'menu-loader';
+  loader.innerHTML = '<p>Загрузка меню...</p>';
+  menu.insertBefore(loader, menu.firstChild);
+}
+
+function hideLoadingState() {
+  const loader = document.getElementById('menu-loader');
+  if (loader) loader.remove();
+}
+
+function showErrorState(message) {
+  const menu = document.querySelector('.menu');
+  if (!menu) return;
+
+  const error = document.createElement('div');
+  error.className = 'menu-error';
+  error.innerHTML = `
+    <p style="color: red;">Ошибка: ${message}</p>
+    <p>Данные могут быть устаревшими</p>
+  `;
+  menu.insertBefore(error, menu.firstChild);
+
+  setTimeout(() => error.remove(), 5000);
+}

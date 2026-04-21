@@ -1,0 +1,103 @@
+{
+  "menu": [
+    {
+      "id": 1,
+      "name": "Салат с бататом и халуми",
+      "description": "Салат из шпината, жареный батат и жареный халуми с грецкими орехами",
+      "price": 450,
+      "currency": "руб.",
+      "rating": 4.0,
+      "category": "starters",
+      "image": "images/salad.jpg",
+      "available": true
+    },
+    {
+      "id": 2,
+      "name": "Брускетта с томатами",
+      "description": "Поджаренный хлеб с томатами и базиликом",
+      "price": 320,
+      "currency": "руб.",
+      "rating": 4.5,
+      "category": "starters",
+      "image": "images/butery.jpg",
+      "available": true
+    },
+    {
+      "id": 3,
+      "name": "Тартар из говядины",
+      "description": "Классический тартар с каперсами и перепелиным яйцом",
+      "price": 580,
+      "currency": "руб.",
+      "rating": 4.8,
+      "category": "starters",
+      "image": "images/food.jpg",
+      "available": true
+    },
+    {
+      "id": 4,
+      "name": "Паста карбонара",
+      "description": "Классическая итальянская паста с беконом и сливочным соусом",
+      "price": 680,
+      "currency": "руб.",
+      "rating": 4.7,
+      "category": "mains",
+      "image": "images/pasta.jpg",
+      "available": true
+    },
+    {
+      "id": 5,
+      "name": "Стейк из лосося",
+      "description": "Лосось на гриле с овощами и лимонным соусом",
+      "price": 1200,
+      "currency": "руб.",
+      "rating": 4.9,
+      "category": "mains",
+      "image": "images/salmon_steak.jpg",
+      "available": true
+    },
+    {
+      "id": 6,
+      "name": "Ризотто с грибами",
+      "description": "Итальянское ризотто с лесными грибами и пармезаном",
+      "price": 720,
+      "currency": "руб.",
+      "rating": 4.6,
+      "category": "mains",
+      "image": "images/food.jpg",
+      "available": true
+    },
+    {
+      "id": 7,
+      "name": "Тирамису",
+      "description": "Классический итальянский десерт с маскарпоне",
+      "price": 420,
+      "currency": "руб.",
+      "rating": 4.8,
+      "category": "desserts",
+      "image": "images/tiramisu.jpg",
+      "available": true
+    },
+    {
+      "id": 8,
+      "name": "Чизкейк Нью-Йорк",
+      "description": "Классический чизкейк с клубничным соусом",
+      "price": 480,
+      "currency": "руб.",
+      "rating": 4.9,
+      "category": "desserts",
+      "image": "images/food.jpg",
+      "available": true
+    },
+    {
+      "id": 9,
+      "name": "Крем-брюле",
+      "description": "Французский десерт с карамельной корочкой",
+      "price": 390,
+      "currency": "руб.",
+      "rating": 4.7,
+      "category": "desserts",
+      "image": "images/food.jpg",
+      "available": true
+    }
+  ]
+}

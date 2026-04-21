@@ -66,29 +66,50 @@ function createFallbackServices() {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('DOM loaded, starting initialization...');
+  console.log('=== DOM CONTENT LOADED ===');
+  console.log('Current URL:', window.location.href);
+  console.log('Current pathname:', window.location.pathname);
 
-  // Инициализация сервисов
-  await initializeServices();
+  try {
+    // Инициализация сервисов
+    await initializeServices();
 
-  // Инициализация общих компонентов
-  initializeBurgerMenu();
-  initializeTestimonialsSlider();
+    // Инициализация общих компонентов
+    console.log('Initializing burger menu...');
+    initializeBurgerMenu();
 
-  // Инициализация компонентов в зависимости от страницы
-  const currentPage = window.location.pathname;
-  console.log('Current page:', currentPage);
+    console.log('Initializing testimonials slider...');
+    initializeTestimonialsSlider();
 
-  if (currentPage.includes('menu.html')) {
-    console.log('Initializing menu page...');
-    initializeMenuFilter();
-    // Загружаем данные меню
-    loadMenuDataSimple();
-  } else if (currentPage.includes('booking.html')) {
-    console.log('Initializing booking page...');
-    initializeBookingForm();
+    // Инициализация компонентов в зависимости от страницы
+    const currentPage = window.location.pathname;
+    console.log('Current page for component init:', currentPage);
+
+    if (currentPage.includes('menu.html')) {
+      console.log('Initializing menu page components...');
+      initializeMenuFilter();
+      // Загружаем данные меню
+      loadMenuDataSimple();
+    } else if (currentPage.includes('booking.html')) {
+      console.log('Initializing booking page components...');
+      initializeBookingForm();
+    } else {
+      console.log('No specific page components to initialize');
+    }
+
+    console.log('=== INITIALIZATION COMPLETE ===');
+  } catch (error) {
+    console.error('Error during initialization:', error);
   }
 });
+
+// Проверка что все функции определены
+console.log('Function definitions check:');
+console.log('initializeBurgerMenu:', typeof initializeBurgerMenu);
+console.log('initializeTestimonialsSlider:', typeof initializeTestimonialsSlider);
+console.log('initializeMenuFilter:', typeof initializeMenuFilter);
+console.log('initializeBookingForm:', typeof initializeBookingForm);
+console.log('validateField:', typeof validateField);
 
 /* Бургер-меню */
 function initializeBurgerMenu() {
@@ -974,10 +995,23 @@ function showOfflineMessage() {
 /* Слайдер отзывов */
 function initializeTestimonialsSlider() {
   console.log('Initializing testimonials slider...');
+  console.log('Looking for .testimonials__slider...');
+
   const testimonialsSlider = document.querySelector('.testimonials__slider');
+  console.log('Found testimonials slider:', testimonialsSlider);
 
   if (testimonialsSlider) {
     console.log('Testimonials slider found, setting up...');
+
+    const slides = document.querySelectorAll('.testimonials__slide');
+    const dots = document.querySelectorAll('.testimonials__dot');
+    const prevBtn = document.querySelector('.testimonials__nav-btn--prev');
+    const nextBtn = document.querySelector('.testimonials__nav-btn--next');
+
+    console.log('Found slides:', slides.length);
+    console.log('Found dots:', dots.length);
+    console.log('Found prevBtn:', prevBtn);
+    console.log('Found nextBtn:', nextBtn);
     const slides = document.querySelectorAll('.testimonials__slide');
     const dots = document.querySelectorAll('.testimonials__dot');
     const prevBtn = document.querySelector('.testimonials__nav-btn--prev');

@@ -1,38 +1,87 @@
-// Импорт сервисов (используем динамический импорт для совместимости)
-let ApiService, LocalStorageService, SessionStorageService, DataParser;
+// Импорт сервисов (fallback для совместимости)
+let ApiService = null;
+let LocalStorageService = null;
+let SessionStorageService = null;
+let DataParser = null;
 
 // Асинхронная инициализация сервисов
 async function initializeServices() {
   try {
-    const apiModule = await import('./api/apiService.js');
-    const storageModule = await import('./storage/localStorage.js');
-    const sessionModule = await import('./storage/sessionStorage.js');
-    const parserModule = await import('./utils/dataParser.js');
+    // Пытаемся загрузить сервисы
+    if (typeof import !== 'undefined') {
+      const apiModule = await import('./api/apiService.js');
+      const storageModule = await import('./storage/localStorage.js');
+      const sessionModule = await import('./storage/sessionStorage.js');
+      const parserModule = await import('./utils/dataParser.js');
 
-    ApiService = apiModule.default;
-    LocalStorageService = storageModule.default;
-    SessionStorageService = sessionModule.default;
-    DataParser = parserModule.default;
+      ApiService = apiModule.default;
+      LocalStorageService = storageModule.default;
+      SessionStorageService = sessionModule.default;
+      DataParser = parserModule.default;
+    }
 
     console.log('Сервисы API успешно инициализированы');
   } catch (error) {
-    console.error('Ошибка инициализации сервисов:', error);
-    // Fallback: работа без API
+    console.error('Ошибка инициализации сервисов, работаем в режиме совместимости:', error);
+    // Fallback: создаем простые заглушки
+    createFallbackServices();
   }
+}
+
+// Создание fallback сервисов для совместимости
+function createFallbackServices() {
+  ApiService = {
+    async getMenu() {
+      // Заглушка для тестирования
+      console.log('Используется fallback API');
+      return [
+        { id: 1, name: 'Test dish', category: 'starters', price: 100 },
+        { id: 2, name: 'Test main', category: 'mains', price: 200 }
+      ];
+    }
+  };
+
+  LocalStorageService = {
+    getMenuCache() { return null; },
+    saveMenuCache() { }
+  };
+
+  SessionStorageService = {
+    saveMenuFilters() { },
+    getMenuFilters() { return null; }
+  };
+
+  DataParser = {
+    parseMenuData(data) { return data; },
+    groupMenuByCategory(data) {
+      const groups = {};
+      data.forEach(item => {
+        if (!groups[item.category]) groups[item.category] = [];
+        groups[item.category].push(item);
+      });
+      return groups;
+    }
+  };
 }
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', async () => {
   await initializeServices();
 
-  // Инициализация компонентов
+  // Инициализация общих компонентов
   initializeBurgerMenu();
-  initializeMenuFilter();
-  initializeBookingForm();
   initializeTestimonialsSlider();
 
+  // Инициализация компонентов в зависимости от страницы
+  const currentPage = window.location.pathname;
+  if (currentPage.includes('menu.html')) {
+    initializeMenuFilter();
+  } else if (currentPage.includes('booking.html')) {
+    initializeBookingForm();
+  }
+
   // Загрузка данных для текущей страницы
-  loadPageData();
+  await loadPageData();
 });
 
 /* Бургер-меню */
@@ -90,6 +139,7 @@ function initializeMenuFilter() {
 
 /* Применение фильтра к меню */
 function applyMenuFilter(category) {
+  // Получаем актуальные элементы меню из DOM
   const menuCategories = document.querySelectorAll('.menu-category');
 
   menuCategories.forEach((categoryEl) => {
@@ -103,6 +153,94 @@ function applyMenuFilter(category) {
 }
 
 /* Валидация формы бронирования */
+function validateField(field) {
+  if (!field) return true;
+
+  const fieldName = field.name;
+  const errorElement = document.getElementById(`${fieldName}-error`);
+  let isValid = true;
+  let errorMessage = '';
+
+  field.classList.remove('error', 'success');
+
+  const isRequired = field.hasAttribute('required');
+  const value = field.value.trim();
+
+  if (isRequired && !value) {
+    isValid = false;
+    errorMessage = 'Это поле обязательно для заполнения';
+  } else {
+    switch (fieldName) {
+      case 'name':
+        if (value && value.length < 2) {
+          isValid = false;
+          errorMessage = 'Имя должно содержать минимум 2 символа';
+        } else if (value && !/^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value)) {
+          isValid = false;
+          errorMessage = 'Имя должно содержать только буквы';
+        }
+        break;
+
+      case 'phone':
+        if (value) {
+          const phoneDigits = value.replace(/\D/g, '');
+          if (phoneDigits.length !== 12 || !phoneDigits.startsWith('375')) {
+            isValid = false;
+            errorMessage = 'Введите корректный номер телефона';
+          }
+        }
+        break;
+
+      case 'email':
+        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          isValid = false;
+          errorMessage = 'Введите корректный email адрес';
+        }
+        break;
+
+      case 'date':
+        if (value) {
+          const selectedDate = new Date(value);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          if (selectedDate < today) {
+            isValid = false;
+            errorMessage = 'Выберите дату не раньше сегодняшней';
+          }
+        }
+        break;
+
+      case 'time':
+        if (value) {
+          const [hours, minutes] = value.split(':').map(Number);
+          const timeValue = hours * 60 + minutes;
+          if (timeValue < 10 * 60 || timeValue > 23 * 60) {
+            isValid = false;
+            errorMessage = 'Выберите время с 10:00 до 23:00';
+          }
+        }
+        break;
+
+      case 'agreement':
+        if (!field.checked) {
+          isValid = false;
+          errorMessage = 'Необходимо согласие на обработку данных';
+        }
+        break;
+    }
+  }
+
+  if (!isValid) {
+    field.classList.add('error');
+    if (errorElement) errorElement.textContent = errorMessage;
+  } else if (value || (fieldName === 'agreement' && field.checked)) {
+    field.classList.add('success');
+    if (errorElement) errorElement.textContent = '';
+  }
+
+  return isValid;
+}
+
 function initializeBookingForm() {
   const bookingForm = document.getElementById('bookingForm');
 
@@ -430,93 +568,7 @@ function showSyncErrorMessage(count) {
   }, 5000);
 }
 
-function validateField(field) {
-  if (!field) return true;
 
-  const fieldName = field.name;
-  const errorElement = document.getElementById(`${fieldName}-error`);
-  let isValid = true;
-  let errorMessage = '';
-
-  field.classList.remove('error', 'success');
-
-  const isRequired = field.hasAttribute('required');
-  const value = field.value.trim();
-
-  if (isRequired && !value) {
-    isValid = false;
-    errorMessage = 'Это поле обязательно для заполнения';
-  } else {
-    switch (fieldName) {
-      case 'name':
-        if (value && value.length < 2) {
-          isValid = false;
-          errorMessage = 'Имя должно содержать минимум 2 символа';
-        } else if (value && !/^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value)) {
-          isValid = false;
-          errorMessage = 'Имя должно содержать только буквы';
-        }
-        break;
-
-      case 'phone':
-        if (value) {
-          const phoneDigits = value.replace(/\D/g, '');
-          if (phoneDigits.length !== 12 || !phoneDigits.startsWith('375')) {
-            isValid = false;
-            errorMessage = 'Введите корректный номер телефона';
-          }
-        }
-        break;
-
-      case 'email':
-        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          isValid = false;
-          errorMessage = 'Введите корректный email адрес';
-        }
-        break;
-
-      case 'date':
-        if (value) {
-          const selectedDate = new Date(value);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          if (selectedDate < today) {
-            isValid = false;
-            errorMessage = 'Выберите дату не раньше сегодняшней';
-          }
-        }
-        break;
-
-      case 'time':
-        if (value) {
-          const [hours, minutes] = value.split(':').map(Number);
-          const timeValue = hours * 60 + minutes;
-          if (timeValue < 10 * 60 || timeValue > 23 * 60) {
-            isValid = false;
-            errorMessage = 'Выберите время с 10:00 до 23:00';
-          }
-        }
-        break;
-
-      case 'agreement':
-        if (!field.checked) {
-          isValid = false;
-          errorMessage = 'Необходимо согласие на обработку данных';
-        }
-        break;
-    }
-  }
-
-  if (!isValid) {
-    field.classList.add('error');
-    if (errorElement) errorElement.textContent = errorMessage;
-  } else if (value || (fieldName === 'agreement' && field.checked)) {
-    field.classList.add('success');
-    if (errorElement) errorElement.textContent = '';
-  }
-
-  return isValid;
-}
 
 /* Глобальные переменные для данных меню */
 let currentMenuData = [];
@@ -632,9 +684,15 @@ function displayMenuData(menuData) {
     const savedFilters = SessionStorageService.getMenuFilters();
     if (savedFilters && savedFilters.category) {
       currentMenuFilter = savedFilters.category;
+      // Применяем фильтр напрямую
+      applyMenuFilter(currentMenuFilter);
+      // Обновляем активную кнопку фильтра
       const filterButton = document.querySelector(`[data-category="${currentMenuFilter}"]`);
       if (filterButton) {
-        filterButton.click();
+        document.querySelectorAll('.menu__filter-btn').forEach((btn) => {
+          btn.classList.remove('menu__filter-btn--active', 'active');
+        });
+        filterButton.classList.add('menu__filter-btn--active', 'active');
       }
     }
   }

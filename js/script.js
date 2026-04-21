@@ -2,165 +2,95 @@
    GourmetResto - Основной JavaScript файл
    ===================================================== */
 
-// Ждём пока загрузится DOM
-document.addEventListener('DOMContentLoaded', function() {
-  
 // =====================================================
-// БУРГЕР-МЕНЮ
+// API КОНФИГУРАЦИЯ
 // =====================================================
-const burger = document.querySelector('.header__burger');
-const nav = document.querySelector('.header__nav');
+const API_CONFIG = {
+  BASE_URL: 'data/',
+  MENU_ENDPOINT: 'menu.json',
+  BOOKINGS_ENDPOINT: 'bookings.json',
+  CACHE_KEY: 'gourmetresto_menu_cache',
+  CACHE_TIMESTAMP: 'gourmetresto_menu_timestamp',
+  OFFLINE_BOOKINGS: 'gourmetresto_offline_bookings',
+  CACHE_DURATION: 24 * 60 * 60 * 1000,
+};
 
-if (burger && nav) {
-  burger.addEventListener('click', () => {
-    burger.classList.toggle('header__burger--active');
-    nav.classList.toggle('header__nav--active');
-    burger.setAttribute('aria-expanded', nav.classList.contains('header__nav--active'));
-  });
-
-  nav.querySelectorAll('.nav__link').forEach((link) => {
-    link.addEventListener('click', () => {
-      burger.classList.remove('header__burger--active');
-      nav.classList.remove('header__nav--active');
-      burger.setAttribute('aria-expanded', 'false');
-    });
-  });
+// =====================================================
+// API ФУНКЦИИ
+// =====================================================
+async function fetchMenuFromAPI() {
+  const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.MENU_ENDPOINT);
+  if (!response.ok) throw new Error('HTTP error: ' + response.status);
+  const data = await response.json();
+  return data.menu || [];
 }
 
-// =====================================================
-// ФИЛЬТР МЕНЮ
-// =====================================================
-const filterButtons = document.querySelectorAll('.menu__filter-btn');
-const menuCategories = document.querySelectorAll('.menu-category');
+async function loadMenuWithCache() {
+  const cached = localStorage.getItem(API_CONFIG.CACHE_KEY);
+  const timestamp = localStorage.getItem(API_CONFIG.CACHE_TIMESTAMP);
+  const now = Date.now();
 
-if (filterButtons.length > 0) {
-  filterButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      filterButtons.forEach((btn) => {
-        btn.classList.remove('menu__filter-btn--active', 'active');
-      });
-      button.classList.add('menu__filter-btn--active', 'active');
-
-      const category = button.getAttribute('data-category');
-
-      menuCategories.forEach((categoryEl) => {
-        const itemCategory = categoryEl.getAttribute('data-category');
-        if (category === 'all' || itemCategory === category) {
-          categoryEl.classList.remove('hidden');
-        } else {
-          categoryEl.classList.add('hidden');
-        }
-      });
-    });
-  });
-}
-
-// =====================================================
-// ВАЛИДАЦИЯ ФОРМЫ БРОНИРОВАНИЯ
-// =====================================================
-const bookingForm = document.getElementById('bookingForm');
-
-if (bookingForm) {
-  const dateInput = document.getElementById('date');
-  if (dateInput) {
-    dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+  if (cached && timestamp && now - parseInt(timestamp) < API_CONFIG.CACHE_DURATION) {
+    return JSON.parse(cached);
   }
 
-  const phoneInput = document.getElementById('phone');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', (e) => {
-      let value = e.target.value.replace(/\D/g, '');
-
-      if (value.startsWith('375')) value = value.substring(3);
-      if (value.length > 9) value = value.substring(0, 9);
-
-      let formattedValue = '+375';
-      if (value.length > 0) formattedValue += ' ' + value.substring(0, 2);
-      if (value.length >= 3) formattedValue += ' ' + value.substring(2, 5);
-      if (value.length >= 6) formattedValue += ' ' + value.substring(5, 7);
-      if (value.length >= 8) formattedValue += ' ' + value.substring(7, 9);
-
-      e.target.value = formattedValue;
-    });
+  try {
+    const menu = await fetchMenuFromAPI();
+    localStorage.setItem(API_CONFIG.CACHE_KEY, JSON.stringify(menu));
+    localStorage.setItem(API_CONFIG.CACHE_TIMESTAMP, now.toString());
+    return menu;
+  } catch (e) {
+    if (cached) return JSON.parse(cached);
+    throw e;
   }
-
-  const formInputs = bookingForm.querySelectorAll('.form-input');
-  formInputs.forEach((input) => {
-    input.addEventListener('blur', () => validateField(input));
-  });
-
-  bookingForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    let isValid = true;
-    const fields = ['name', 'phone', 'email', 'date', 'time', 'guests', 'agreement'];
-
-    // Собираем данные формы
-    const bookingData = {};
-    fields.forEach((fieldName) => {
-      const field = bookingForm.querySelector(`[name="${fieldName}"]`);
-      if (field) {
-        bookingData[fieldName] = field.value;
-        if (!validateField(field)) isValid = false;
-      }
-    });
-
-    if (isValid) {
-      try {
-        // Пытаемся отправить на сервер (симуляция)
-        await sendBookingToAPI(bookingData);
-
-        const successMessage = document.getElementById('form-success');
-        if (successMessage) {
-          successMessage.textContent =
-            'Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.';
-          successMessage.classList.add('show');
-        }
-      } catch (error) {
-        // Если нет сети - сохраняем офлайн
-        console.log('Нет сети, сохраняем офлайн');
-        saveOfflineBooking(bookingData);
-
-        const successMessage = document.getElementById('form-success');
-        if (successMessage) {
-          successMessage.innerHTML =
-            '<span style="color: orange;">Нет соединения. Бронирование сохранено и будет отправлено при подключении к сети.</span>';
-          successMessage.classList.add('show');
-        }
-      }
-
-      bookingForm.reset();
-      formInputs.forEach((input) => input.classList.remove('success'));
-
-      setTimeout(() => {
-        if (successMessage) successMessage.classList.remove('show');
-      }, 5000);
-    }
-  });
 }
 
-// Симуляция отправки бронирования на сервер
-async function sendBookingToAPI(bookingData) {
-  // Проверяем есть ли интернет
-  if (!navigator.onLine) {
-    throw new Error('Нет соединения');
-  }
-  
-  // Симуляция успешного ответа (в реальном API был бы fetch)
-  // Для本地ногоJSON просто возвращаем успех
-  return new Promise((resolve) => {
-    setTimeout(() => resolve({ success: true }), 500);
-  });
+function saveOfflineBooking(booking) {
+  const bookings = getOfflineBookings();
+  bookings.push({ ...booking, offline: true, createdAt: Date.now() });
+  localStorage.setItem(API_CONFIG.OFFLINE_BOOKINGS, JSON.stringify(bookings));
 }
 
-  return response.json();
+function getOfflineBookings() {
+  const data = localStorage.getItem(API_CONFIG.OFFLINE_BOOKINGS);
+  return data ? JSON.parse(data) : [];
 }
 
+function clearOfflineBookings() {
+  localStorage.removeItem(API_CONFIG.OFFLINE_BOOKINGS);
+}
+
+function showLoadingState() {
+  const menu = document.querySelector('.menu');
+  if (!menu) return;
+  const loader = document.createElement('div');
+  loader.id = 'menu-loader';
+  loader.innerHTML = '<p>Загрузка меню...</p>';
+  menu.insertBefore(loader, menu.firstChild);
+}
+
+function hideLoadingState() {
+  const loader = document.getElementById('menu-loader');
+  if (loader) loader.remove();
+}
+
+function showErrorState(msg) {
+  const menu = document.querySelector('.menu');
+  if (!menu) return;
+  const error = document.createElement('div');
+  error.innerHTML = `<p style="color:red">Ошибка: ${msg}</p>`;
+  menu.insertBefore(error, menu.firstChild);
+  setTimeout(() => error.remove(), 5000);
+}
+
+// =====================================================
+// ВАЛИДАЦИЯ ФОРМЫ
+// =====================================================
 function validateField(field) {
   if (!field) return true;
 
   const fieldName = field.name;
-  const errorElement = document.getElementById(`${fieldName}-error`);
+  const errorElement = document.getElementById(fieldName + '-error');
   let isValid = true;
   let errorMessage = '';
 
@@ -171,63 +101,49 @@ function validateField(field) {
 
   if (isRequired && !value) {
     isValid = false;
-    errorMessage = 'Это поле обязательно для заполнения';
+    errorMessage = 'Это поле обязательно';
   } else {
     switch (fieldName) {
       case 'name':
         if (value && value.length < 2) {
           isValid = false;
-          errorMessage = 'Имя должно содержать минимум 2 символа';
-        } else if (value && !/^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value)) {
-          isValid = false;
-          errorMessage = 'Имя должно содержать только буквы';
+          errorMessage = 'Минимум 2 символа';
         }
         break;
-
       case 'phone':
         if (value) {
-          const phoneDigits = value.replace(/\D/g, '');
-          if (phoneDigits.length !== 12 || !phoneDigits.startsWith('375')) {
+          const digits = value.replace(/\D/g, '');
+          if (digits.length !== 12 || !digits.startsWith('375')) {
             isValid = false;
-            errorMessage = 'Введите корректный номер телефона';
+            errorMessage = 'Введите корректный номер';
           }
         }
         break;
-
       case 'email':
         if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
           isValid = false;
-          errorMessage = 'Введите корректный email адрес';
+          errorMessage = 'Введите корректный email';
         }
         break;
-
       case 'date':
-        if (value) {
-          const selectedDate = new Date(value);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          if (selectedDate < today) {
-            isValid = false;
-            errorMessage = 'Выберите дату не раньше сегодняшней';
-          }
+        if (value && new Date(value) < new Date().setHours(0, 0, 0, 0)) {
+          isValid = false;
+          errorMessage = 'Дата не раньше сегодня';
         }
         break;
-
       case 'time':
         if (value) {
-          const [hours, minutes] = value.split(':').map(Number);
-          const timeValue = hours * 60 + minutes;
-          if (timeValue < 10 * 60 || timeValue > 23 * 60) {
+          const [h, m] = value.split(':').map(Number);
+          if (h * 60 + m < 600 || h * 60 + m > 1380) {
             isValid = false;
-            errorMessage = 'Выберите время с 10:00 до 23:00';
+            errorMessage = 'Время с 10:00 до 23:00';
           }
         }
         break;
-
       case 'agreement':
         if (!field.checked) {
           isValid = false;
-          errorMessage = 'Необходимо согласие на обработку данных';
+          errorMessage = 'Необходимо согласие';
         }
         break;
     }
@@ -245,207 +161,171 @@ function validateField(field) {
 }
 
 // =====================================================
-// СЛАЙДЕР ОТЗЫВОВ
+// ОСНОВНОЙ КОД - выполняется после загрузки DOM
 // =====================================================
-const testimonialsSlider = document.querySelector('.testimonials__slider');
-
-if (testimonialsSlider) {
-  const slides = document.querySelectorAll('.testimonials__slide');
-  const dots = document.querySelectorAll('.testimonials__dot');
-  const prevBtn = document.querySelector('.testimonials__nav-btn--prev');
-  const nextBtn = document.querySelector('.testimonials__nav-btn--next');
-
-  let currentSlide = 0;
-  const totalSlides = slides.length;
-
-  function showSlide(index) {
-    slides.forEach((slide) => slide.classList.remove('testimonials__slide--active'));
-    dots.forEach((dot) => dot.classList.remove('testimonials__dot--active'));
-    slides[index].classList.add('testimonials__slide--active');
-    dots[index].classList.add('testimonials__dot--active');
-    currentSlide = index;
+document.addEventListener('DOMContentLoaded', function () {
+  // БУРГЕР-МЕНЮ
+  const burger = document.querySelector('.header__burger');
+  const nav = document.querySelector('.header__nav');
+  if (burger && nav) {
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('header__burger--active');
+      nav.classList.toggle('header__nav--active');
+    });
   }
 
-  function nextSlide() {
-    showSlide((currentSlide + 1) % totalSlides);
+  // ФИЛЬТР МЕНЮ
+  const filterButtons = document.querySelectorAll('.menu__filter-btn');
+  const menuCategories = document.querySelectorAll('.menu-category');
+
+  if (filterButtons.length > 0) {
+    filterButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        filterButtons.forEach(function (btn) {
+          btn.classList.remove('menu__filter-btn--active', 'active');
+        });
+        button.classList.add('menu__filter-btn--active', 'active');
+
+        const category = button.getAttribute('data-category');
+        menuCategories.forEach(function (categoryEl) {
+          const itemCategory = categoryEl.getAttribute('data-category');
+          if (category === 'all' || itemCategory === category) {
+            categoryEl.classList.remove('hidden');
+          } else {
+            categoryEl.classList.add('hidden');
+          }
+        });
+      });
+    });
   }
 
-  function prevSlide() {
-    showSlide((currentSlide - 1 + totalSlides) % totalSlides);
-  }
-
-  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => showSlide(index));
-  });
-
-  let autoSlideInterval = setInterval(nextSlide, 5000);
-
-  testimonialsSlider.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
-  testimonialsSlider.addEventListener('mouseleave', () => {
-    autoSlideInterval = setInterval(nextSlide, 5000);
-  });
-}
-
-}); // Конец DOMContentLoaded
-
-// =====================================================
-// API СЕРВИС (симуляция внешнего API)
-// =====================================================
-const API_CONFIG = {
-  BASE_URL: 'data/',
-  MENU_ENDPOINT: 'menu.json',
-  BOOKINGS_ENDPOINT: 'bookings.json',
-  CACHE_KEY: 'gourmetresto_menu_cache',
-  CACHE_TIMESTAMP: 'gourmetresto_menu_timestamp',
-  OFFLINE_BOOKINGS: 'gourmetresto_offline_bookings',
-  CACHE_DURATION: 24 * 60 * 60 * 1000, // 24 часа
-};
-
-// Асинхронная функция для загрузки меню
-async function fetchMenuFromAPI() {
-  try {
-    const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.MENU_ENDPOINT);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  // ВАЛИДАЦИЯ ФОРМЫ БРОНИРОВАНИЯ
+  const bookingForm = document.getElementById('bookingForm');
+  if (bookingForm) {
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+      dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
     }
 
-    const data = await response.json();
-    console.log('Меню загружено из API:', data);
-    return data.menu || [];
-  } catch (error) {
-    console.error('Ошибка загрузки меню:', error);
-    throw error;
-  }
-}
-
-// Загрузка меню с кэшированием
-async function loadMenuWithCache() {
-  const cachedMenu = localStorage.getItem(API_CONFIG.CACHE_KEY);
-  const cachedTime = localStorage.getItem(API_CONFIG.CACHE_TIMESTAMP);
-  const now = Date.now();
-
-  // Проверяем кэш
-  if (cachedMenu && cachedTime) {
-    const cacheAge = now - parseInt(cachedTime);
-    if (cacheAge < API_CONFIG.CACHE_DURATION) {
-      console.log('Используем кэшированное меню');
-      return JSON.parse(cachedMenu);
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function (e) {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.startsWith('375')) val = val.substring(3);
+        if (val.length > 9) val = val.substring(0, 9);
+        let formatted = '+375';
+        if (val.length > 0) formatted += ' ' + val.substring(0, 2);
+        if (val.length >= 3) formatted += ' ' + val.substring(2, 5);
+        if (val.length >= 6) formatted += ' ' + val.substring(5, 7);
+        if (val.length >= 8) formatted += ' ' + val.substring(7, 9);
+        e.target.value = formatted;
+      });
     }
-    console.log('Кэш устарел, загружаем новые данные');
+
+    const formInputs = bookingForm.querySelectorAll('.form-input');
+    formInputs.forEach(function (input) {
+      input.addEventListener('blur', function () {
+        validateField(input);
+      });
+    });
+
+    bookingForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      let isValid = true;
+      var fields = ['name', 'phone', 'email', 'date', 'time', 'guests', 'agreement'];
+
+      fields.forEach(function (fieldName) {
+        var field = bookingForm.querySelector('[name="' + fieldName + '"]');
+        if (field && !validateField(field)) isValid = false;
+      });
+
+      if (isValid) {
+        var success = document.getElementById('form-success');
+        if (success) {
+          success.textContent = 'Ваша заявка успешно отправлена!';
+          success.classList.add('show');
+        }
+
+        bookingForm.reset();
+        formInputs.forEach(function (input) {
+          input.classList.remove('success');
+        });
+
+        setTimeout(function () {
+          if (success) success.classList.remove('show');
+        }, 5000);
+      }
+    });
   }
 
-  // Загружаем свежие данные
-  try {
-    const menu = await fetchMenuFromAPI();
-    localStorage.setItem(API_CONFIG.CACHE_KEY, JSON.stringify(menu));
-    localStorage.setItem(API_CONFIG.CACHE_TIMESTAMP, now.toString());
-    return menu;
-  } catch (error) {
-    // Если не удалось загрузить, пробуем использовать старый кэш
-    if (cachedMenu) {
-      console.log('Ошибка API, используем старый кэш');
-      return JSON.parse(cachedMenu);
+  // СЛАЙДЕР ОТЗЫВОВ
+  var testimonialsSlider = document.querySelector('.testimonials__slider');
+  if (testimonialsSlider) {
+    var slides = testimonialsSlider.querySelectorAll('.testimonials__slide');
+    var dots = document.querySelectorAll('.testimonials__dot');
+    var prevBtn = document.querySelector('.testimonials__nav-btn--prev');
+    var nextBtn = document.querySelector('.testimonials__nav-btn--next');
+
+    var currentSlide = 0;
+    var totalSlides = slides.length;
+
+    function showSlide(index) {
+      slides.forEach(function (slide) {
+        slide.classList.remove('testimonials__slide--active');
+      });
+      dots.forEach(function (dot) {
+        dot.classList.remove('testimonials__dot--active');
+      });
+      slides[index].classList.add('testimonials__slide--active');
+      dots[index].classList.add('testimonials__dot--active');
+      currentSlide = index;
     }
-    throw error;
+
+    function nextSlide() {
+      showSlide((currentSlide + 1) % totalSlides);
+    }
+
+    function prevSlide() {
+      showSlide((currentSlide - 1 + totalSlides) % totalSlides);
+    }
+
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+    dots.forEach(function (dot, index) {
+      dot.addEventListener('click', function () {
+        showSlide(index);
+      });
+    });
+
+    var autoSlide = setInterval(nextSlide, 5000);
+
+    testimonialsSlider.addEventListener('mouseenter', function () {
+      clearInterval(autoSlide);
+    });
+    testimonialsSlider.addEventListener('mouseleave', function () {
+      autoSlide = setInterval(nextSlide, 5000);
+    });
   }
-}
 
-// Оффлайн хранение бронирований
-function saveOfflineBooking(booking) {
-  const bookings = getOfflineBookings();
-  bookings.push({
-    ...booking,
-    offline: true,
-    createdAt: Date.now(),
-  });
-  localStorage.setItem(API_CONFIG.OFFLINE_BOOKINGS, JSON.stringify(bookings));
-}
-
-function getOfflineBookings() {
-  const data = localStorage.getItem(API_CONFIG.OFFLINE_BOOKINGS);
-  return data ? JSON.parse(data) : [];
-}
-
-function clearOfflineBookings() {
-  localStorage.removeItem(API_CONFIG.OFFLINE_BOOKINGS);
-}
-
-// Обработка событий онлайн/оффлайн
-window.addEventListener('online', () => {
-  console.log('Сеть восстановлена!');
-  const offlineBookings = getOfflineBookings();
-  if (offlineBookings.length > 0) {
-    syncOfflineBookings();
+  // ЗАГРУЗКА МЕНЮ ПРИ НАЛИЧИИ
+  if (window.location.pathname.indexOf('menu.html') !== -1) {
+    loadMenuWithCache()['catch'](function (e) {
+      showErrorState(e.message);
+    });
   }
 });
 
-window.addEventListener('offline', () => {
-  console.log('С��ть потеряна! Работаем офлайн.');
-});
-
-async function syncOfflineBookings() {
-  const bookings = getOfflineBookings();
-  console.log('Синхронизация офлайн бронирований:', bookings.length);
-
-  // Симуляция синхронизации (в реальном проекте здесь был бы API вызов)
-  for (const booking of bookings) {
-    console.log('Синхронизировано бронирование:', booking.name);
-  }
-
-  clearOfflineBookings();
-  console.log('Оффлайн бронирования синхронизированы');
-}
-
-// Инициализация API при загрузке страницы меню
-document.addEventListener('DOMContentLoaded', async () => {
-  const menuPage = window.location.pathname.includes('menu.html');
-
-  if (menuPage) {
-    try {
-      showLoadingState();
-      const menu = await loadMenuWithCache();
-      hideLoadingState();
-      console.log('Загружено блюд:', menu.length);
-    } catch (error) {
-      hideLoadingState();
-      showErrorState(error.message);
-      console.error('Не удалось загрузить меню:', error);
-    }
+// Обработчики онлайн/офлайн
+window.addEventListener('online', function () {
+  var bookings = getOfflineBookings();
+  if (bookings.length > 0) {
+    console.log('Синхронизация бронирований:', bookings.length);
+    clearOfflineBookings();
   }
 });
 
-// Индикатор загрузки
-function showLoadingState() {
-  const menu = document.querySelector('.menu');
-  if (!menu) return;
-
-  const loader = document.createElement('div');
-  loader.id = 'menu-loader';
-  loader.className = 'menu-loader';
-  loader.innerHTML = '<p>Загрузка меню...</p>';
-  menu.insertBefore(loader, menu.firstChild);
-}
-
-function hideLoadingState() {
-  const loader = document.getElementById('menu-loader');
-  if (loader) loader.remove();
-}
-
-function showErrorState(message) {
-  const menu = document.querySelector('.menu');
-  if (!menu) return;
-
-  const error = document.createElement('div');
-  error.className = 'menu-error';
-  error.innerHTML = `
-    <p style="color: red;">Ошибка: ${message}</p>
-    <p>Данные могут быть устаревшими</p>
-  `;
-  menu.insertBefore(error, menu.firstChild);
-
-  setTimeout(() => error.remove(), 5000);
-}
+window.addEventListener('offline', function () {
+  console.log('Офлайн режим');
+});

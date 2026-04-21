@@ -65,23 +65,26 @@ function createFallbackServices() {
 }
 
 // Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', async () => {
-  await initializeServices();
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, starting initialization...');
 
-  // Инициализация общих компонентов
+  // Простая инициализация без модулей для тестирования
   initializeBurgerMenu();
   initializeTestimonialsSlider();
 
   // Инициализация компонентов в зависимости от страницы
   const currentPage = window.location.pathname;
+  console.log('Current page:', currentPage);
+
   if (currentPage.includes('menu.html')) {
+    console.log('Initializing menu page...');
     initializeMenuFilter();
+    // Загружаем данные меню
+    loadMenuDataSimple();
   } else if (currentPage.includes('booking.html')) {
+    console.log('Initializing booking page...');
     initializeBookingForm();
   }
-
-  // Загрузка данных для текущей страницы
-  await loadPageData();
 });
 
 /* Бургер-меню */
@@ -113,11 +116,14 @@ let currentMenuFilter = 'all';
 /* Фильтрация меню */
 function initializeMenuFilter() {
   const filterButtons = document.querySelectorAll('.menu__filter-btn');
-  const menuCategories = document.querySelectorAll('.menu-category');
+
+  console.log('Initializing menu filter, found buttons:', filterButtons.length);
 
   if (filterButtons.length > 0) {
     filterButtons.forEach((button) => {
       button.addEventListener('click', () => {
+        console.log('Filter button clicked:', button.getAttribute('data-category'));
+
         filterButtons.forEach((btn) => {
           btn.classList.remove('menu__filter-btn--active', 'active');
         });
@@ -134,6 +140,9 @@ function initializeMenuFilter() {
         applyMenuFilter(category);
       });
     });
+    console.log('Menu filter initialized successfully');
+  } else {
+    console.error('No filter buttons found!');
   }
 }
 
@@ -142,8 +151,12 @@ function applyMenuFilter(category) {
   // Получаем актуальные элементы меню из DOM
   const menuCategories = document.querySelectorAll('.menu-category');
 
+  console.log('Applying filter:', category, 'Found categories:', menuCategories.length);
+
   menuCategories.forEach((categoryEl) => {
     const itemCategory = categoryEl.getAttribute('data-category');
+    console.log('Category element:', itemCategory, 'should show:', category === 'all' || itemCategory === category);
+
     if (category === 'all' || itemCategory === category) {
       categoryEl.classList.remove('hidden');
     } else {
@@ -242,9 +255,11 @@ function validateField(field) {
 }
 
 function initializeBookingForm() {
+  console.log('Initializing booking form...');
   const bookingForm = document.getElementById('bookingForm');
 
   if (bookingForm) {
+    console.log('Booking form found, setting up validation...');
     const dateInput = document.getElementById('date');
     if (dateInput) {
       dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
@@ -580,9 +595,103 @@ async function loadPageData() {
 
   if (currentPage.includes('menu.html')) {
     await loadMenuData();
+    // Инициализируем фильтр ПОСЛЕ загрузки данных
+    initializeMenuFilter();
   } else if (currentPage.includes('booking.html')) {
+    initializeBookingForm();
     await initializeOfflineBooking();
   }
+}
+
+/* Простая загрузка данных меню для тестирования */
+async function loadMenuDataSimple() {
+  console.log('Loading menu data...');
+
+  try {
+    // Загружаем данные из JSON файла
+    const response = await fetch('data/menu.json');
+    if (!response.ok) {
+      throw new Error('Failed to load menu data');
+    }
+
+    const data = await response.json();
+    console.log('Menu data loaded:', data);
+
+    // Отображаем данные
+    displayMenuDataSimple(data.menu);
+  } catch (error) {
+    console.error('Error loading menu:', error);
+    // Fallback: показываем сообщение об ошибке
+    const menuContainer = document.querySelector('.menu');
+    if (menuContainer) {
+      menuContainer.innerHTML += '<p style="color: red;">Ошибка загрузки меню</p>';
+    }
+  }
+}
+
+/* Упрощенное отображение данных меню */
+function displayMenuDataSimple(menuData) {
+  if (!Array.isArray(menuData)) {
+    console.error('Invalid menu data format');
+    return;
+  }
+
+  console.log('Displaying menu data...');
+
+  // Группируем по категориям
+  const groupedMenu = {};
+  menuData.forEach(item => {
+    if (!groupedMenu[item.category]) {
+      groupedMenu[item.category] = [];
+    }
+    groupedMenu[item.category].push(item);
+  });
+
+  // Очищаем существующие категории
+  const menuContainer = document.querySelector('.menu');
+  const existingCategories = menuContainer.querySelectorAll('.menu-category');
+  existingCategories.forEach(category => category.remove());
+
+  // Создаем категории
+  Object.keys(groupedMenu).forEach(category => {
+    const categoryElement = document.createElement('article');
+    categoryElement.className = 'menu-category';
+    categoryElement.setAttribute('data-category', category);
+
+    const categoryTitle = document.createElement('h2');
+    categoryTitle.className = 'menu-category__title';
+    categoryTitle.textContent = getCategoryDisplayName(category);
+    categoryElement.appendChild(categoryTitle);
+
+    const categoryList = document.createElement('div');
+    categoryList.className = 'menu-category__list';
+
+    groupedMenu[category].forEach(item => {
+      const menuItem = document.createElement('div');
+      menuItem.className = 'menu-item';
+      menuItem.innerHTML = `
+        <figure class="menu-item__figure">
+          <img src="${item.image}" alt="${item.name}" class="menu-item__image" />
+          <figcaption class="menu-item__caption">${item.name}</figcaption>
+        </figure>
+        <div class="menu-item__info">
+          <h3 class="menu-item__name">${item.name}</h3>
+          <p class="menu-item__description">${item.description}</p>
+          <div class="menu-item__price">
+            <span class="menu-item__price-value">${item.price}</span>
+            <span class="menu-item__price-currency">${item.currency}</span>
+          </div>
+          <p class="menu-item__rating">${item.rating} Rating</p>
+        </div>
+      `;
+      categoryList.appendChild(menuItem);
+    });
+
+    categoryElement.appendChild(categoryList);
+    menuContainer.appendChild(categoryElement);
+  });
+
+  console.log('Menu displayed successfully');
 }
 
 /* Асинхронная загрузка данных меню */
@@ -861,9 +970,11 @@ function showOfflineMessage() {
 
 /* Слайдер отзывов */
 function initializeTestimonialsSlider() {
+  console.log('Initializing testimonials slider...');
   const testimonialsSlider = document.querySelector('.testimonials__slider');
 
   if (testimonialsSlider) {
+    console.log('Testimonials slider found, setting up...');
     const slides = document.querySelectorAll('.testimonials__slide');
     const dots = document.querySelectorAll('.testimonials__dot');
     const prevBtn = document.querySelector('.testimonials__nav-btn--prev');

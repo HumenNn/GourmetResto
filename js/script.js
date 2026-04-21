@@ -247,3 +247,127 @@ if (testimonialsSlider) {
     autoSlideInterval = setInterval(nextSlide, 5000);
   });
 }
+
+// =====================================================
+// API СЕРВИС (симуляция внешнего API)
+// =====================================================
+const API_CONFIG = {
+  BASE_URL: 'data/',
+  MENU_ENDPOINT: 'menu.json',
+  BOOKINGS_ENDPOINT: 'bookings.json',
+  CACHE_KEY: 'gourmetresto_menu_cache',
+  CACHE_TIMESTAMP: 'gourmetresto_menu_timestamp',
+  OFFLINE_BOOKINGS: 'gourmetresto_offline_bookings',
+  CACHE_DURATION: 24 * 60 * 60 * 1000, // 24 часа
+};
+
+// Асинхронная функция для загрузки меню
+async function fetchMenuFromAPI() {
+  try {
+    const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.MENU_ENDPOINT);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Меню загружено из API:', data);
+    return data.menu || [];
+  } catch (error) {
+    console.error('Ошибка загрузки меню:', error);
+    throw error;
+  }
+}
+
+// Загрузка меню с кэшированием
+async function loadMenuWithCache() {
+  const cachedMenu = localStorage.getItem(API_CONFIG.CACHE_KEY);
+  const cachedTime = localStorage.getItem(API_CONFIG.CACHE_TIMESTAMP);
+  const now = Date.now();
+
+  // Проверяем кэш
+  if (cachedMenu && cachedTime) {
+    const cacheAge = now - parseInt(cachedTime);
+    if (cacheAge < API_CONFIG.CACHE_DURATION) {
+      console.log('Используем кэшированное меню');
+      return JSON.parse(cachedMenu);
+    }
+    console.log('Кэш устарел, загружаем новые данные');
+  }
+
+  // Загружаем свежие данные
+  try {
+    const menu = await fetchMenuFromAPI();
+    localStorage.setItem(API_CONFIG.CACHE_KEY, JSON.stringify(menu));
+    localStorage.setItem(API_CONFIG.CACHE_TIMESTAMP, now.toString());
+    return menu;
+  } catch (error) {
+    // Если не удалось загрузить, пробуем использовать старый кэш
+    if (cachedMenu) {
+      console.log('Ошибка API, используем старый кэш');
+      return JSON.parse(cachedMenu);
+    }
+    throw error;
+  }
+}
+
+// Оффлайн хранение бронирований
+function saveOfflineBooking(booking) {
+  const bookings = getOfflineBookings();
+  bookings.push({
+    ...booking,
+    offline: true,
+    createdAt: Date.now(),
+  });
+  localStorage.setItem(API_CONFIG.OFFLINE_BOOKINGS, JSON.stringify(bookings));
+}
+
+function getOfflineBookings() {
+  const data = localStorage.getItem(API_CONFIG.OFFLINE_BOOKINGS);
+  return data ? JSON.parse(data) : [];
+}
+
+function clearOfflineBookings() {
+  localStorage.removeItem(API_CONFIG.OFFLINE_BOOKINGS);
+}
+
+// Обработка событий онлайн/оффлайн
+window.addEventListener('online', () => {
+  console.log('Сеть восстановлена!');
+  const offlineBookings = getOfflineBookings();
+  if (offlineBookings.length > 0) {
+    syncOfflineBookings();
+  }
+});
+
+window.addEventListener('offline', () => {
+  console.log('С��ть потеряна! Работаем офлайн.');
+});
+
+async function syncOfflineBookings() {
+  const bookings = getOfflineBookings();
+  console.log('Синхронизация офлайн бронирований:', bookings.length);
+
+  // Симуляция синхронизации (в реальном проекте здесь был бы API вызов)
+  for (const booking of bookings) {
+    console.log('Синхронизировано бронирование:', booking.name);
+  }
+
+  clearOfflineBookings();
+  console.log('Оффлайн бронирования синхронизированы');
+}
+
+// Инициализация API при загрузке страницы меню
+document.addEventListener('DOMContentLoaded', async () => {
+  const menuPage = window.location.pathname.includes('menu.html');
+
+  if (menuPage) {
+    console.log('Загружаем меню с API...');
+    try {
+      const menu = await loadMenuWithCache();
+      console.log('Загружено блюд:', menu.length);
+    } catch (error) {
+      console.error('Не удалось загрузить меню:', error);
+    }
+  }
+});

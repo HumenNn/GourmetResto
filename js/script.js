@@ -99,7 +99,6 @@ function validateField(field) {
 
   console.log(`=== VALIDATING FIELD: ${fieldName} ===`);
   console.log('Field value:', field.value);
-  console.log('Field required:', field.hasAttribute('required'));
 
   field.classList.remove('error', 'success');
 
@@ -118,10 +117,6 @@ function validateField(field) {
           isValid = false;
           errorMessage = 'Минимум 2 символа';
           console.error(`ERROR: Name too short: ${value.length} chars`);
-        } else if (value && !/^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value)) {
-          isValid = false;
-          errorMessage = 'Имя должно содержать только буквы';
-          console.error(`ERROR: Name contains invalid characters`);
         }
         break;
       case 'phone':
@@ -146,7 +141,7 @@ function validateField(field) {
         break;
       case 'date':
         console.log('Validating date:', value);
-        if (value && new Date(value) < new Date().setHours(0,0,0,0)) {
+        if (value && new Date(value) < new Date().setHours(0, 0, 0, 0)) {
           isValid = false;
           errorMessage = 'Дата не раньше сегодня';
           console.error(`ERROR: Date is in the past: ${value}`);
@@ -182,64 +177,10 @@ function validateField(field) {
   } else {
     field.classList.add('success');
     if (errorElement) errorElement.textContent = '';
-    console.log(`✓ VALIDATION PASSED for "${fieldName}"`);
+    console.log(`✅ VALIDATION PASSED for "${fieldName}"`);
   }
 
   console.log(`=== END VALIDATION: ${fieldName}, isValid: ${isValid} ===\n`);
-  return isValid;
-}
-        break;
-      case 'phone':
-        if (value) {
-          const digits = value.replace(/\D/g, '');
-          if (digits.length !== 12 || !digits.startsWith('375')) {
-            isValid = false;
-            errorMessage = 'Введите корректный номер';
-          }
-        }
-        break;
-      case 'email':
-        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          isValid = false;
-          errorMessage = 'Введите корректный email';
-        }
-        break;
-      case 'date':
-        if (value && new Date(value) < new Date().setHours(0, 0, 0, 0)) {
-          isValid = false;
-          errorMessage = 'Дата не раньше сегодня';
-        }
-        break;
-      case 'time':
-        if (value) {
-          const [h, m] = value.split(':').map(Number);
-          if (h * 60 + m < 600 || h * 60 + m > 1380) {
-            isValid = false;
-            errorMessage = 'Время с 10:00 до 23:00';
-          }
-        }
-        break;
-      case 'agreement':
-        if (!field.checked) {
-          isValid = false;
-          errorMessage = 'Необходимо согласие';
-        }
-        break;
-    }
-  }
-
-  if (!isValid) {
-    field.classList.add('error');
-    if (errorElement) errorElement.textContent = errorMessage;
-    // ВЫВОД ОШИБКИ В КОНСОЛЬ БРАУЗЕРА
-    console.error(`Ошибка валидации поля "${fieldName}": ${errorMessage}`);
-    console.error('Поле:', field);
-  } else if (value || (fieldName === 'agreement' && field.checked)) {
-    field.classList.add('success');
-    if (errorElement) errorElement.textContent = '';
-    console.log(`Поле "${fieldName}" успешно проверено`);
-  }
-
   return isValid;
 }
 
@@ -250,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // БУРГЕР-МЕНЮ
   const burger = document.querySelector('.header__burger');
   const nav = document.querySelector('.header__nav');
+
   if (burger && nav) {
     burger.addEventListener('click', () => {
       burger.classList.toggle('header__burger--active');
@@ -287,12 +229,9 @@ document.addEventListener('DOMContentLoaded', function () {
   console.log('Booking form found:', !!bookingForm);
 
   if (bookingForm) {
-    console.log('Setting up booking form validation...');
-
     const dateInput = document.getElementById('date');
     if (dateInput) {
       dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
-      console.log('Date input initialized');
     }
 
     const phoneInput = document.getElementById('phone');
@@ -308,7 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (val.length >= 8) formatted += ' ' + val.substring(7, 9);
         e.target.value = formatted;
       });
-      console.log('Phone input listener added');
     }
 
     const formInputs = bookingForm.querySelectorAll('.form-input');
@@ -320,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
         validateField(input);
       });
     });
-    console.log('Blur listeners added to form inputs');
 
     bookingForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -328,7 +265,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       let isValid = true;
       var fields = ['name', 'phone', 'email', 'date', 'time', 'guests', 'agreement'];
-      console.log('Validating fields:', fields);
 
       fields.forEach(function (fieldName) {
         var field = bookingForm.querySelector('[name="' + fieldName + '"]');
@@ -339,10 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log('Field', fieldName, 'valid:', fieldValid);
           if (!fieldValid) {
             isValid = false;
-            console.error('VALIDATION FAILED for field:', fieldName);
           }
-        } else {
-          console.error('Field not found:', fieldName);
         }
       });
 
@@ -368,12 +301,12 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('FORM VALIDATION FAILED! Check errors above.');
       }
     });
-
-    console.log('Submit listener added to booking form');
   }
 
   // СЛАЙДЕР ОТЗЫВОВ
   var testimonialsSlider = document.querySelector('.testimonials__slider');
+  console.log('Testimonials slider found:', !!testimonialsSlider);
+
   if (testimonialsSlider) {
     var slides = testimonialsSlider.querySelectorAll('.testimonials__slide');
     var dots = document.querySelectorAll('.testimonials__dot');
@@ -422,9 +355,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ЗАГРУЗКА МЕНЮ ПРИ НАЛИЧИИ
+  // ЗАГРУЗКА МЕНЮ ДЛЯ menu.html
   if (window.location.pathname.indexOf('menu.html') !== -1) {
+    console.log('Loading menu from API...');
+    showLoadingState();
+
     loadMenuWithCache()['catch'](function (e) {
+      hideLoadingState();
       showErrorState(e.message);
     });
   }

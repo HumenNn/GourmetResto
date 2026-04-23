@@ -87,12 +87,19 @@ function showErrorState(msg) {
 // ВАЛИДАЦИЯ ФОРМЫ
 // =====================================================
 function validateField(field) {
-  if (!field) return true;
+  if (!field) {
+    console.error('validateField called with null/undefined field');
+    return true;
+  }
 
   const fieldName = field.name;
   const errorElement = document.getElementById(fieldName + '-error');
   let isValid = true;
   let errorMessage = '';
+
+  console.log(`=== VALIDATING FIELD: ${fieldName} ===`);
+  console.log('Field value:', field.value);
+  console.log('Field required:', field.hasAttribute('required'));
 
   field.classList.remove('error', 'success');
 
@@ -102,13 +109,85 @@ function validateField(field) {
   if (isRequired && !value) {
     isValid = false;
     errorMessage = 'Это поле обязательно';
+    console.error(`ERROR: Field "${fieldName}" is required but empty`);
   } else {
     switch (fieldName) {
       case 'name':
+        console.log('Validating name:', value);
         if (value && value.length < 2) {
           isValid = false;
           errorMessage = 'Минимум 2 символа';
+          console.error(`ERROR: Name too short: ${value.length} chars`);
+        } else if (value && !/^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value)) {
+          isValid = false;
+          errorMessage = 'Имя должно содержать только буквы';
+          console.error(`ERROR: Name contains invalid characters`);
         }
+        break;
+      case 'phone':
+        console.log('Validating phone:', value);
+        if (value) {
+          const digits = value.replace(/\D/g, '');
+          console.log('Phone digits:', digits, 'Length:', digits.length);
+          if (digits.length !== 12 || !digits.startsWith('375')) {
+            isValid = false;
+            errorMessage = 'Введите корректный номер';
+            console.error(`ERROR: Invalid phone: ${digits}`);
+          }
+        }
+        break;
+      case 'email':
+        console.log('Validating email:', value);
+        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          isValid = false;
+          errorMessage = 'Введите корректный email';
+          console.error(`ERROR: Invalid email: ${value}`);
+        }
+        break;
+      case 'date':
+        console.log('Validating date:', value);
+        if (value && new Date(value) < new Date().setHours(0,0,0,0)) {
+          isValid = false;
+          errorMessage = 'Дата не раньше сегодня';
+          console.error(`ERROR: Date is in the past: ${value}`);
+        }
+        break;
+      case 'time':
+        console.log('Validating time:', value);
+        if (value) {
+          const [h, m] = value.split(':').map(Number);
+          console.log('Time hours:', h, 'minutes:', m);
+          if (h * 60 + m < 600 || h * 60 + m > 1380) {
+            isValid = false;
+            errorMessage = 'Время с 10:00 до 23:00';
+            console.error(`ERROR: Time out of range: ${h}:${m}`);
+          }
+        }
+        break;
+      case 'agreement':
+        console.log('Validating agreement:', field.checked);
+        if (!field.checked) {
+          isValid = false;
+          errorMessage = 'Необходимо согласие';
+          console.error(`ERROR: Agreement not checked`);
+        }
+        break;
+    }
+  }
+
+  if (!isValid) {
+    field.classList.add('error');
+    if (errorElement) errorElement.textContent = errorMessage;
+    console.error(`❌ VALIDATION FAILED for "${fieldName}": ${errorMessage}`);
+  } else {
+    field.classList.add('success');
+    if (errorElement) errorElement.textContent = '';
+    console.log(`✓ VALIDATION PASSED for "${fieldName}"`);
+  }
+
+  console.log(`=== END VALIDATION: ${fieldName}, isValid: ${isValid} ===\n`);
+  return isValid;
+}
         break;
       case 'phone':
         if (value) {
@@ -152,9 +231,13 @@ function validateField(field) {
   if (!isValid) {
     field.classList.add('error');
     if (errorElement) errorElement.textContent = errorMessage;
+    // ВЫВОД ОШИБКИ В КОНСОЛЬ БРАУЗЕРА
+    console.error(`Ошибка валидации поля "${fieldName}": ${errorMessage}`);
+    console.error('Поле:', field);
   } else if (value || (fieldName === 'agreement' && field.checked)) {
     field.classList.add('success');
     if (errorElement) errorElement.textContent = '';
+    console.log(`Поле "${fieldName}" успешно проверено`);
   }
 
   return isValid;
@@ -201,10 +284,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ВАЛИДАЦИЯ ФОРМЫ БРОНИРОВАНИЯ
   const bookingForm = document.getElementById('bookingForm');
+  console.log('Booking form found:', !!bookingForm);
+
   if (bookingForm) {
+    console.log('Setting up booking form validation...');
+
     const dateInput = document.getElementById('date');
     if (dateInput) {
       dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+      console.log('Date input initialized');
     }
 
     const phoneInput = document.getElementById('phone');
@@ -220,27 +308,48 @@ document.addEventListener('DOMContentLoaded', function () {
         if (val.length >= 8) formatted += ' ' + val.substring(7, 9);
         e.target.value = formatted;
       });
+      console.log('Phone input listener added');
     }
 
     const formInputs = bookingForm.querySelectorAll('.form-input');
+    console.log('Form inputs found:', formInputs.length);
+
     formInputs.forEach(function (input) {
       input.addEventListener('blur', function () {
+        console.log('Blur event on field:', input.name);
         validateField(input);
       });
     });
+    console.log('Blur listeners added to form inputs');
 
     bookingForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      console.log('=== FORM SUBMIT ===');
 
       let isValid = true;
       var fields = ['name', 'phone', 'email', 'date', 'time', 'guests', 'agreement'];
+      console.log('Validating fields:', fields);
 
       fields.forEach(function (fieldName) {
         var field = bookingForm.querySelector('[name="' + fieldName + '"]');
-        if (field && !validateField(field)) isValid = false;
+        console.log('Checking field:', fieldName, 'Found:', !!field);
+
+        if (field) {
+          var fieldValid = validateField(field);
+          console.log('Field', fieldName, 'valid:', fieldValid);
+          if (!fieldValid) {
+            isValid = false;
+            console.error('VALIDATION FAILED for field:', fieldName);
+          }
+        } else {
+          console.error('Field not found:', fieldName);
+        }
       });
 
+      console.log('Overall form valid:', isValid);
+
       if (isValid) {
+        console.log('Form is valid! Showing success message...');
         var success = document.getElementById('form-success');
         if (success) {
           success.textContent = 'Ваша заявка успешно отправлена!';
@@ -255,8 +364,12 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
           if (success) success.classList.remove('show');
         }, 5000);
+      } else {
+        console.error('FORM VALIDATION FAILED! Check errors above.');
       }
     });
+
+    console.log('Submit listener added to booking form');
   }
 
   // СЛАЙДЕР ОТЗЫВОВ

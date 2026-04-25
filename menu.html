@@ -1,224 +1,353 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GourmetResto — Меню</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body itemscope itemtype="https://schema.org/Restaurant">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inspiration&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body itemscope itemtype="https://schema.org/Restaurant">
     <a href="#main" class="skip-link">Перейти к основному содержимому</a>
 
     <header class="header">
-        <div class="container header__content">
-            <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
-            <button class="header__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
-                <span class="header__burger-line"></span>
-                <span class="header__burger-line"></span>
-                <span class="header__burger-line"></span>
-            </button>
-            <nav class="header__nav nav" aria-label="Основная навигация">
-                <a href="index.html" class="nav__link">Главная</a>
-                <a href="menu.html" class="nav__link nav__link--active">Меню</a>
-                <a href="about.html" class="nav__link">О нас</a>
-                <a href="contacts.html" class="nav__link">Контакты</a>
-            </nav>
-        </div>
+      <div class="container header__content">
+        <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
+        <button
+          class="header__burger"
+          type="button"
+          aria-label="Открыть меню"
+          aria-expanded="false"
+        >
+          <span class="header__burger-line"></span>
+          <span class="header__burger-line"></span>
+          <span class="header__burger-line"></span>
+        </button>
+        <nav class="header__nav nav" aria-label="Основная навигация">
+          <a href="index.html" class="nav__link">Главная</a>
+          <a href="menu.html" class="nav__link nav__link--active">Меню</a>
+          <a href="booking.html" class="nav__link">Бронирование</a>
+          <a href="about.html" class="nav__link">О нас</a>
+          <a href="contacts.html" class="nav__link">Контакты</a>
+        </nav>
+      </div>
     </header>
 
     <main id="main" class="main">
-        <section class="menu">
-            <div class="container">
-                <h1 class="menu__title">Наше меню</h1>
+      <section class="menu">
+        <div class="container">
+          <h1 class="menu__title">Наше меню</h1>
 
-                <article class="menu-category">
-                    <h2 class="menu-category__title">Закуски</h2>
-                    <div class="menu-category__list">
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Салат с бататом и халуми" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Салат с бататом и халуми</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Салат с бататом и халуми</h3>
-                                <p class="menu-item__description" itemprop="description">Салат из шпината, жареный батат и жареный халуми с грецкими орехами</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">450</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.0 Rating</p>
-                            </div>
-                        </div>
+          <!-- Фильтр по категориям -->
+          <div class="menu__filter">
+            <button class="menu__filter-btn menu__filter-btn--active" data-category="all">
+              Все
+            </button>
+            <button class="menu__filter-btn" data-category="starters">Закуски</button>
+            <button class="menu__filter-btn" data-category="mains">Основные блюда</button>
+            <button class="menu__filter-btn" data-category="desserts">Десерты</button>
+          </div>
 
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Брускетта с томатами" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Брускетта с томатами</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Брускетта с томатами</h3>
-                                <p class="menu-item__description" itemprop="description">Поджаренный хлеб с томатами и базиликом</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">320</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.5 Rating</p>
-                            </div>
-                        </div>
+          <article class="menu-category" data-category="starters">
+            <h2 class="menu-category__title">Закуски</h2>
+            <div class="menu-category__list">
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/salad.jpg"
+                    alt="Салат с бататом и халуми"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Салат с бататом и халуми</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Салат с бататом и халуми</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Салат из шпината, жареный батат и жареный халуми с грецкими орехами
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">450</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.0 Rating</p>
+                </div>
+              </div>
 
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Тартар из говядины" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Тартар из говядины</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Тартар из говядины</h3>
-                                <p class="menu-item__description" itemprop="description">Классический тартар с каперсами и перепелиным яйцом</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">580</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.8 Rating</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/butery.jpg"
+                    alt="Брускетта с томатами"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Брускетта с томатами</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Брускетта с томатами</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Поджаренный хлеб с томатами и базиликом
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">320</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.5 Rating</p>
+                </div>
+              </div>
 
-                <article class="menu-category">
-                    <h2 class="menu-category__title">Основные блюда</h2>
-                    <div class="menu-category__list">
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Паста карбонара" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Паста карбонара</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Паста карбонара</h3>
-                                <p class="menu-item__description" itemprop="description">Классическая итальянская паста с беконом и сливочным соусом</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">680</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.7 Rating</p>
-                            </div>
-                        </div>
-
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Стейк из лосося" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Стейк из лосося</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Стейк из лосося</h3>
-                                <p class="menu-item__description" itemprop="description">Лосось на гриле с овощами и лимонным соусом</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">1200</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.9 Rating</p>
-                            </div>
-                        </div>
-
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Ризотто с грибами" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Ризотто с грибами</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Ризотто с грибами</h3>
-                                <p class="menu-item__description" itemprop="description">Итальянское ризотто с лесными грибами и пармезаном</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">720</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.6 Rating</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="menu-category">
-                    <h2 class="menu-category__title">Десерты</h2>
-                    <div class="menu-category__list">
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Тирамису" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Тирамису</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Тирамису</h3>
-                                <p class="menu-item__description" itemprop="description">Классический итальянский десерт с маскарпоне</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">420</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.8 Rating</p>
-                            </div>
-                        </div>
-
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Чизкейк Нью-Йорк" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Чизкейк Нью-Йорк</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Чизкейк Нью-Йорк</h3>
-                                <p class="menu-item__description" itemprop="description">Классический чизкейк с клубничным соусом</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">480</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.9 Rating</p>
-                            </div>
-                        </div>
-
-                        <div class="menu-item" itemscope itemtype="https://schema.org/Product">
-                            <figure class="menu-item__figure">
-                                <img src="images/food.jpg" alt="Крем-брюле" class="menu-item__image" itemprop="image">
-                                <figcaption class="menu-item__caption">Крем-брюле</figcaption>
-                            </figure>
-                            <div class="menu-item__info">
-                                <h3 class="menu-item__name" itemprop="name">Крем-брюле</h3>
-                                <p class="menu-item__description" itemprop="description">Французский десерт с карамельной корочкой</p>
-                                <div class="menu-item__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                    <span class="menu-item__price-value" itemprop="price">390</span>
-                                    <span class="menu-item__price-currency" itemprop="priceCurrency">RUB</span>
-                                </div>
-                                <p class="menu-item__rating">4.7 Rating</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/food.jpg"
+                    alt="Тартар из говядины"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Тартар из говядины</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Тартар из говядины</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Классический тартар с каперсами и перепелиным яйцом
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">580</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.8 Rating</p>
+                </div>
+              </div>
             </div>
-        </section>
+          </article>
+
+          <article class="menu-category" data-category="mains">
+            <h2 class="menu-category__title">Основные блюда</h2>
+            <div class="menu-category__list">
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/pasta.jpg"
+                    alt="Паста карбонара"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Паста карбонара</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Паста карбонара</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Классическая итальянская паста с беконом и сливочным соусом
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">680</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.7 Rating</p>
+                </div>
+              </div>
+
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/salmon_steak.jpg"
+                    alt="Стейк из лосося"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Стейк из лосося</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Стейк из лосося</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Лосось на гриле с овощами и лимонным соусом
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">1200</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.9 Rating</p>
+                </div>
+              </div>
+
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/food.jpg"
+                    alt="Ризотто с грибами"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Ризотто с грибами</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Ризотто с грибами</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Итальянское ризотто с лесными грибами и пармезаном
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">720</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.6 Rating</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-category" data-category="desserts">
+            <h2 class="menu-category__title">Десерты</h2>
+            <div class="menu-category__list">
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/tiramisu.jpg"
+                    alt="Тирамису"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Тирамису</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Тирамису</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Классический итальянский десерт с маскарпоне
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">420</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.8 Rating</p>
+                </div>
+              </div>
+
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/food.jpg"
+                    alt="Чизкейк Нью-Йорк"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Чизкейк Нью-Йорк</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Чизкейк Нью-Йорк</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Классический чизкейк с клубничным соусом
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">480</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.9 Rating</p>
+                </div>
+              </div>
+
+              <div class="menu-item" itemscope itemtype="https://schema.org/Product">
+                <figure class="menu-item__figure">
+                  <img
+                    src="images/food.jpg"
+                    alt="Крем-брюле"
+                    class="menu-item__image"
+                    itemprop="image"
+                  />
+                  <figcaption class="menu-item__caption">Крем-брюле</figcaption>
+                </figure>
+                <div class="menu-item__info">
+                  <h3 class="menu-item__name" itemprop="name">Крем-брюле</h3>
+                  <p class="menu-item__description" itemprop="description">
+                    Французский десерт с карамельной корочкой
+                  </p>
+                  <div
+                    class="menu-item__price"
+                    itemprop="offers"
+                    itemscope
+                    itemtype="https://schema.org/Offer"
+                  >
+                    <span class="menu-item__price-value" itemprop="price">390</span>
+                    <span class="menu-item__price-currency" itemprop="priceCurrency">руб.</span>
+                  </div>
+                  <p class="menu-item__rating">4.7 Rating</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <div class="container footer__container">
-            <nav class="footer__nav">
-                <a href="index.html" class="footer__nav-link">Главная</a>
-                <a href="menu.html" class="footer__nav-link">Меню</a>
-                <a href="about.html" class="footer__nav-link">О нас</a>
-                <a href="contacts.html" class="footer__nav-link">Контакты</a>
-            </nav>
-            <hr class="footer__divider">
-            <div class="footer__bottom">
-                <p class="footer__copy">
-                    &copy; <time class="footer__date" datetime="2026">2026</time> GourmetResto. Все права защищены
-                </p>
-                <a href="index.html" class="footer__logo">GourmetResto</a>
-                <div class="footer__social">
-                    <a href="#" class="footer__social-link" aria-label="ВКонтакте">VK</a>
-                    <a href="#" class="footer__social-link" aria-label="Telegram">TG</a>
-                    <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
-                </div>
-            </div>
+      <div class="container footer__container">
+        <nav class="footer__nav">
+          <a href="index.html" class="footer__nav-link">Главная</a>
+          <a href="menu.html" class="footer__nav-link">Меню</a>
+          <a href="booking.html" class="footer__nav-link">Бронирование</a>
+          <a href="about.html" class="footer__nav-link">О нас</a>
+          <a href="contacts.html" class="footer__nav-link">Контакты</a>
+        </nav>
+        <hr class="footer__divider" />
+        <div class="footer__bottom">
+          <p class="footer__copy">
+            &copy; <time class="footer__date" datetime="2026">2026</time> GourmetResto. Все права
+            защищены
+          </p>
+          <a href="index.html" class="footer__logo">GourmetResto</a>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="ВКонтакте">VK</a>
+            <a href="#" class="footer__social-link" aria-label="Telegram">TG</a>
+            <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
+          </div>
         </div>
+      </div>
     </footer>
 
     <script src="js/script.js"></script>
-</body>
+  </body>
 </html>

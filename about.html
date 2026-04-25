@@ -1,113 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GourmetResto — О нас</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body itemscope itemtype="https://schema.org/Restaurant">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inspiration&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body itemscope itemtype="https://schema.org/Restaurant">
     <a href="#main" class="skip-link">Перейти к основному содержимому</a>
 
     <header class="header">
-        <div class="container header__content">
-            <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
-            <button class="header__burger" type="button" aria-label="Открыть меню" aria-expanded="false">
-                <span class="header__burger-line"></span>
-                <span class="header__burger-line"></span>
-                <span class="header__burger-line"></span>
-            </button>
-            <nav class="header__nav nav" aria-label="Основная навигация">
-                <a href="index.html" class="nav__link">Главная</a>
-                <a href="menu.html" class="nav__link">Меню</a>
-                <a href="about.html" class="nav__link nav__link--active">О нас</a>
-                <a href="contacts.html" class="nav__link">Контакты</a>
-            </nav>
-        </div>
+      <div class="container header__content">
+        <a href="index.html" class="header__logo" itemprop="name">GourmetResto</a>
+        <button
+          class="header__burger"
+          type="button"
+          aria-label="Открыть меню"
+          aria-expanded="false"
+        >
+          <span class="header__burger-line"></span>
+          <span class="header__burger-line"></span>
+          <span class="header__burger-line"></span>
+        </button>
+        <nav class="header__nav nav" aria-label="Основная навигация">
+          <a href="index.html" class="nav__link">Главная</a>
+          <a href="menu.html" class="nav__link">Меню</a>
+          <a href="booking.html" class="nav__link">Бронирование</a>
+          <a href="about.html" class="nav__link nav__link--active">О нас</a>
+          <a href="contacts.html" class="nav__link">Контакты</a>
+        </nav>
+      </div>
     </header>
 
     <main id="main" class="main">
-        <section class="about">
-            <div class="container">
-                <h1 class="about__title">О ресторане GourmetResto</h1>
+      <section class="about">
+        <div class="container">
+          <h1 class="about__title">О ресторане GourmetResto</h1>
 
-                <article class="about__story">
-                    <h2 class="about__story-title">Наша история</h2>
-                    <p class="about__text">
-                        GourmetResto открылся <time datetime="2020-05-15">15 мая 2020 года</time> с простой миссией:
-                        создавать блюда, которые вдохновляют и объединяют людей. За эти годы мы стали местом,
-                        где традиционные рецепты встречаются с современными кулинарными техниками.
-                    </p>
-                    <p class="about__text">
-                        Мы используем качественные материалы, которые получаем напрямую от фермеров.
-                        Наши повара — опытные люди в пищевой сфере. Поэтому качество и вкус наших блюд гарантированы.
-                    </p>
-                    <figure class="about__figure">
-                        <img src="images/food.jpg" alt="Интерьер ресторана GourmetResto" class="about__image">
-                        <figcaption class="about__figcaption">Уютный зал нашего ресторана</figcaption>
-                    </figure>
-                </article>
+          <article class="about__story">
+            <h2 class="about__story-title">Наша история</h2>
+            <p class="about__text">
+              GourmetResto открылся <time datetime="2020-05-15">15 мая 2020 года</time> с простой
+              миссией: создавать блюда, которые вдохновляют и объединяют людей. За эти годы мы стали
+              местом, где традиционные рецепты встречаются с современными кулинарными техниками.
+            </p>
+            <p class="about__text">
+              Мы используем качественные материалы, которые получаем напрямую от фермеров. Наши
+              повара — опытные люди в пищевой сфере. Поэтому качество и вкус наших блюд
+              гарантированы.
+            </p>
+            <figure class="about__figure">
+              <img
+                src="images/food.jpg"
+                alt="Интерьер ресторана GourmetResto"
+                class="about__image"
+              />
+              <figcaption class="about__figcaption">Уютный зал нашего ресторана</figcaption>
+            </figure>
+          </article>
 
-                <article class="about__chef">
-                    <h2 class="about__chef-title">Наш шеф-повар</h2>
-                    <div class="about__chef-content">
-                        <figure class="about__chef-figure">
-                            <img src="images/chief.jpg" alt="Шеф-повар Виктор Баринов" class="about__chef-image">
-                            <figcaption class="about__chef-figcaption">Виктор Баринов</figcaption>
-                        </figure>
-                        <div class="about__chef-description">
-                            <p class="about__chef-text">
-                                Шеф-повар с 15-летним стажем, работавший в лучших ресторанах Европы.
-                                Виктор создаёт уникальные блюда, сочетая классические техники с авторскими решениями.
-                            </p>
-                        </div>
-                    </div>
-                </article>
-
-                <aside class="about__facts">
-                    <h2 class="about__facts-title">Наши достижения</h2>
-                    <ul class="about__facts-list">
-                        <li class="about__facts-item">
-                            <time datetime="2023">2023</time> — Лучший ресторан города
-                        </li>
-                        <li class="about__facts-item">
-                            <time datetime="2022">2022</time> — Звезда гастрономического гида
-                        </li>
-                        <li class="about__facts-item">
-                            Более 50 довольных гостей ежедневно
-                        </li>
-                    </ul>
-                </aside>
+          <article class="about__chef">
+            <h2 class="about__chef-title">Наш шеф-повар</h2>
+            <div class="about__chef-content">
+              <figure class="about__chef-figure">
+                <img
+                  src="images/chief.jpg"
+                  alt="Шеф-повар Виктор Баринов"
+                  class="about__chef-image"
+                />
+                <figcaption class="about__chef-figcaption">Виктор Баринов</figcaption>
+              </figure>
+              <div class="about__chef-description">
+                <p class="about__chef-text">
+                  Шеф-повар с 15-летним стажем, работавший в лучших ресторанах Европы. Виктор
+                  создаёт уникальные блюда, сочетая классические техники с авторскими решениями.
+                </p>
+              </div>
             </div>
-        </section>
+          </article>
+
+          <aside class="about__facts">
+            <h2 class="about__facts-title">Наши достижения</h2>
+            <ul class="about__facts-list">
+              <li class="about__facts-item">
+                <time datetime="2023">2023</time> — Лучший ресторан города
+              </li>
+              <li class="about__facts-item">
+                <time datetime="2022">2022</time> — Звезда гастрономического гида
+              </li>
+              <li class="about__facts-item">Более 50 довольных гостей ежедневно</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
-        <div class="container footer__container">
-            <nav class="footer__nav">
-                <a href="index.html" class="footer__nav-link">Главная</a>
-                <a href="menu.html" class="footer__nav-link">Меню</a>
-                <a href="about.html" class="footer__nav-link">О нас</a>
-                <a href="contacts.html" class="footer__nav-link">Контакты</a>
-            </nav>
-            <hr class="footer__divider">
-            <div class="footer__bottom">
-                <p class="footer__copy">
-                    &copy; <time class="footer__date" datetime="2026">2026</time> GourmetResto. Все права защищены
-                </p>
-                <a href="index.html" class="footer__logo">GourmetResto</a>
-                <div class="footer__social">
-                    <a href="#" class="footer__social-link" aria-label="ВКонтакте">VK</a>
-                    <a href="#" class="footer__social-link" aria-label="Telegram">TG</a>
-                    <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
-                </div>
-            </div>
+      <div class="container footer__container">
+        <nav class="footer__nav">
+          <a href="index.html" class="footer__nav-link">Главная</a>
+          <a href="menu.html" class="footer__nav-link">Меню</a>
+          <a href="booking.html" class="footer__nav-link">Бронирование</a>
+          <a href="about.html" class="footer__nav-link">О нас</a>
+          <a href="contacts.html" class="footer__nav-link">Контакты</a>
+        </nav>
+        <hr class="footer__divider" />
+        <div class="footer__bottom">
+          <p class="footer__copy">
+            &copy; <time class="footer__date" datetime="2026">2026</time> GourmetResto. Все права
+            защищены
+          </p>
+          <a href="index.html" class="footer__logo">GourmetResto</a>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="ВКонтакте">VK</a>
+            <a href="#" class="footer__social-link" aria-label="Telegram">TG</a>
+            <a href="#" class="footer__social-link" aria-label="Instagram">IG</a>
+          </div>
         </div>
+      </div>
     </footer>
 
     <script src="js/script.js"></script>
-</body>
+  </body>
 </html>

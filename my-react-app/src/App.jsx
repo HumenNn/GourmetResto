@@ -1,18 +1,15 @@
 import './App.css';
-
-import {dishes, categories, restaurantStats, reviewsData, mockCartData} from './data/mockData';
+import { dishes, categories, restaurantStats, reviewsData, mockCartData } from './data/mockData';
 
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import DishCard from './components/features/DishCard';
 import Cart from './components/features/Cart';
 import ReviewList from './components/features/ReviewList';
 import CategoryMenu from './components/ui/CategoryMenu';
+import MenuSection from './components/features/MenuSection';
 
 function App() {
-  // ==========================================
-  // ОБРАБОТЧИКИ СОБЫТИЙ (ЗАГЛУШКИ ПО ЗАДАНИЮ)
-  // ==========================================
+
   const handleCategoryClick = (category) => {
     console.log(`[Событие]: Выбрана категория "${category}"`);
   };
@@ -29,14 +26,16 @@ function App() {
     console.log(`[Событие]: Поиск по строке: "${text}"`);
   };
 
-  // Статическая категория для демонстрации (т.к. useState запрещен)
+  // 1. Создаем функцию-обработчик
+  const handleCheckout = () => {
+    console.log("[Событие]: Оформление заказа нажато");
+  };
+
   const currentCategory = "Все";
 
   return (
     <div className="app-container">
-
       <Header title="FoodDelivery" onSearch={handleSearch} />
-
 
       <CategoryMenu 
         categories={categories} 
@@ -44,24 +43,24 @@ function App() {
         onSelect={handleCategoryClick} 
       />
 
-
-      <div style={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: '30px', alignItems: 'flex-start', padding: '20px' }}>
+        
         <main style={{ flex: '7' }}>
-          <div className="menu-grid">
-            {dishes.map((dish) => (
-              <DishCard 
-                key={dish.id} 
-                dish={dish} 
-                onAddToCart={handleAddToCart}
-                onViewDetails={handleViewDetails}
-              />
-            ))}
-          </div>
+          <MenuSection 
+            title={currentCategory === "Все" ? "Популярные блюда" : currentCategory} 
+            dishes={dishes} 
+            onAddToCart={handleAddToCart}
+            onViewDetails={handleViewDetails}
+          />
         </main>
-        <div style={{ flex: '3' }}>
-          <Cart items={mockCartData} />
-        </div>
+
+        <aside style={{ flex: '3' }}>
+          {/* 2. ВАЖНО: Передаем функцию в проп onCheckout здесь! */}
+          <Cart items={mockCartData} onCheckout={handleCheckout} />
+        </aside>
+        
       </div>
+      
       <ReviewList reviews={reviewsData} />
       <Footer info={restaurantStats} />
     </div>

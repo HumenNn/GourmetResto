@@ -112,7 +112,7 @@ body {
 }
 
 .btn-primary {
-  background: #e74c3c;
+  background: #e5331f;
   color: #fff; /* Белый текст на красном */
 }
 
@@ -208,13 +208,13 @@ body {
   background: #fff5f5;
   border-radius: 8px;
   cursor: pointer;
-  color: #e74c3c;
+  color: #de301d;
   transition: all 0.2s;
   margin-left: 5px;
 }
 
 .btn-remove:hover {
-  background: #e74c3c;
+  background: #eb3f2b;
   color: #fff;
 }
 

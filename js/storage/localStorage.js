@@ -1,16 +1,7 @@
 import API_CONFIG from '../api/config.js';
 
-/**
- * Сервис для работы с LocalStorage
- * Реализует кэширование данных меню
- */
 class LocalStorageService {
-  /**
-   * Сохраняет данные в LocalStorage
-   * @param {string} key - Ключ
-   * @param {any} data - Данные для сохранения
-   * @returns {boolean} Успешность сохранения
-   */
+
   static setItem(key, data) {
     try {
       const serializedData = JSON.stringify(data);

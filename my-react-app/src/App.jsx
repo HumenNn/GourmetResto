@@ -26,7 +26,7 @@ function App() {
     console.log(`[Событие]: Поиск по строке: "${text}"`);
   };
 
-  // 1. Создаем функцию-обработчик
+
   const handleCheckout = () => {
     console.log("[Событие]: Оформление заказа нажато");
   };
@@ -55,7 +55,7 @@ function App() {
         </main>
 
         <aside style={{ flex: '3' }}>
-          {/* 2. ВАЖНО: Передаем функцию в проп onCheckout здесь! */}
+
           <Cart items={mockCartData} onCheckout={handleCheckout} />
         </aside>
         

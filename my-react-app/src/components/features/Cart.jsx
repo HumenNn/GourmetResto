@@ -1,7 +1,7 @@
 import CartItem from './CartItem';
 import { calculateOrderTotal, calculateArrivalTime } from '../../utils/orderUtils';
 
-const Cart = ({ items, onCheckout }) => { // Добавили onCheckout в пропсы
+const Cart = ({ items, onCheckout }) => {
   const totalSum = calculateOrderTotal(items);
   const arrivalTime = calculateArrivalTime(40);
 

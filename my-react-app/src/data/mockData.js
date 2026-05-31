@@ -8,7 +8,7 @@ import imgRisottoMushroom from '../assets/images/risotto-mushroom.jpg';
 
 import imgTiramisu from '../assets/images/tiramisu.jpg';
 import imgCheesecake from '../assets/images/cheesecake.jpg';
-import imgCremeBrulee from '../assets/images/creme-brulee.jpg';
+import imgCremeBrulee from '../assets/images/creme-brulee.webp';
 
 import avatarUser1 from '../assets/images/user1.jpg';
 import avatarUser2 from '../assets/images/user2.jpg';
@@ -129,20 +129,19 @@ export const reviewsData = [
   }
 ];
 
-// Добавь это в конец файла src/data/mockData.js
 
 export const mockCartData = [
   {
-    id: 101, // Уникальный ID для записи в корзине
-    dishId: 4, // Ссылка на ID блюда "Паста карбонара"
+    id: 101,
+    dishId: 4,
     name: "Паста карбонара",
     price: 680,
-    quantity: 2, // Две порции
-    image: imgCarbonara // Используем тот же импорт, что и для основного списка
+    quantity: 2,
+    image: imgCarbonara
   },
   {
     id: 102,
-    dishId: 1, // Ссылка на "Салат с бататом"
+    dishId: 1,
     name: "Салат с бататом и халуми",
     price: 450,
     quantity: 1,
@@ -150,7 +149,7 @@ export const mockCartData = [
   },
   {
     id: 103,
-    dishId: 7, // Ссылка на "Тирамису"
+    dishId: 7,
     name: "Тирамису",
     price: 420,
     quantity: 1,

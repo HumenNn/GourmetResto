@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1777472277439" clover="3.2.0">
+  <project timestamp="1777472277439" name="All files">
+    <metrics statements="45" coveredstatements="40" conditionals="7" coveredconditionals="5" methods="25" coveredmethods="18" elements="77" coveredelements="63" complexity="0" loc="45" ncloc="45" packages="4" files="12" classes="12"/>
+    <package name="components.features">
+      <metrics statements="19" coveredstatements="16" conditionals="4" coveredconditionals="3" methods="12" coveredmethods="7"/>
+      <file name="Cart.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\features\Cart.jsx">
+        <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+      </file>
+      <file name="CartItem.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\features\CartItem.jsx">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+      </file>
+      <file name="DishCard.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\features\DishCard.jsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+      <file name="MenuSection.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\features\MenuSection.jsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+      </file>
+      <file name="ReviewList.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\features\ReviewList.jsx">
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.layout">
+      <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <file name="Footer.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\layout\Footer.jsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+      </file>
+      <file name="Header.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\layout\Header.jsx">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.ui">
+      <metrics statements="11" coveredstatements="11" conditionals="3" coveredconditionals="2" methods="6" coveredmethods="6"/>
+      <file name="Button.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\ui\Button.jsx">
+        <metrics statements="2" coveredstatements="2" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="2" count="6" type="stmt"/>
+      </file>
+      <file name="Card.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\ui\Card.jsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+      </file>
+      <file name="CategoryMenu.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\ui\CategoryMenu.jsx">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+      </file>
+      <file name="Rating.jsx" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\components\ui\Rating.jsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+      <file name="orderUtils.js" path="C:\Users\Matvey\Desktop\GourmetResto\GourmetResto\my-react-app\src\utils\orderUtils.js">
+        <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

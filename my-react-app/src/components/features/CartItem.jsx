@@ -8,7 +8,7 @@ const CartItem = ({ item }) => {
       <div style={{ flex: 1 }}>
         <h4 style={{ margin: 0, color: '#000', fontSize: '0.95rem' }}>{item.name}</h4>
         <small style={{ color: '#636e72', fontWeight: '600' }}>
-          {item.price} ₽
+          {item.price} Руб
         </small>
       </div>
 

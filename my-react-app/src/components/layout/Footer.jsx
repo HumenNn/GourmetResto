@@ -10,6 +10,7 @@ const Footer = ({ info }) => {
         <Rating value={info.rating} />
       </div>
       <p style={{ marginTop: '20px', fontSize: '0.8em' }}>© 2026 Все права защищены</p>
+      <meta name="footer"></meta>
     </footer>
   );
 };
